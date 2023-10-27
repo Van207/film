@@ -1,0 +1,44 @@
+.menu-wrapper ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.menu-wrapper ul li {
+	padding: 5px 0;
+}
+
+.menu-wrapper ul li p {
+	margin: 0;
+}
+
+
+
+.menu-wrapper ul ul {
+	padding: 5px 0 0 20px;
+}
+
+.menu-wrapper ul li:hover {
+	cursor: pointer;
+	text-decoration: underline;
+	color: blue;
+}
+
+.menu-ul {
+	position: relative;
+	max-height: 40px;
+	overflow: hidden;
+	transition: max-height 0.2s linear;
+}
+
+.menu-ul_icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 8px;
+	cursor: pointer;
+}
+
+.menu-ul_icon:hover {
+	color: #ff0000;
+}

@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\FilmController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\home\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,3 +62,7 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::get('/delete/{id}', [PostController::class, 'destroy'])->name('post.delete');
 	});
 });
+
+
+Route::get("/", [HomeController::class, 'index'])->name('home.index');
+Route::get("/{slug}_{id}", [HomeController::class, 'phim'])->name('home.phim');

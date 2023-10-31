@@ -78,7 +78,7 @@ https://templatemo.com/tm-568-digimedia
 					<nav class="main-nav">
 						<!-- ***** Logo Start ***** -->
 						<a href="index.html" class="logo">
-							<img src="assets/images/logo-v2.png" alt="">
+							{{-- <img src="{{ asset('images/favicon.jpg') }}" alt="" width="10%" class="w-10"> --}}
 						</a>
 						<!-- ***** Logo End ***** -->
 						<!-- ***** Menu Start ***** -->

@@ -21,24 +21,24 @@
 								</div>
 							</div>
 							<div class="col-md-6 pt-2">
-								<p><b>Năm sản xuất:</b> {{ $phim->year }}</p>
+								<p><span class="fw-bold">Năm sản xuất:</span> {{ $phim->year }}</p>
 
 								@foreach ($details as $detail)
 									@if ($detail->title == 'earliest release date')
-										<p><b>Ngày phát hành:</b> {{ $detail->details }}</p>
+										<p><span class="fw-bold">Ngày phát hành:</span> {{ $detail->details }}</p>
 									@endif
 									@if ($detail->title == 'domestic distributor')
-										<p><b>Nhà sản xuất:</b> {{ $detail->details }}</p>
+										<p><span class="fw-bold">Nhà sản xuất:</span> {{ $detail->details }}</p>
 									@endif
 									@if ($detail->title == 'running time')
-										<p><b>Thời lượng:</b> {{ $detail->details }}</p>
+										<p><span class="fw-bold">Thời lượng:</span> {{ $detail->details }}</p>
 									@endif
 									@if ($detail->title == 'mpaa')
-										<p><b>MPAA:</b> {{ $detail->details }}</p>
+										<p><span class="fw-bold">MPAA:</span> {{ $detail->details }}</p>
 									@endif
 
 									@if ($detail->title == 'genres')
-										<p><b>Thể loại</b></p>
+										<p><span class="fw-bold">Thể loại</span></p>
 										@php
 											$cate_arr = explode(',', $detail->details);
 											$cate_arr = array_filter($cate_arr, 'strlen');
@@ -50,9 +50,31 @@
 										</div>
 									@endif
 								@endforeach
-								<p><b>Chi phí:</b> <span class="text-primary"> ${{ number_format($phim->budget, 0, '.', ',') }}</span></p>
+
+								@if ($phim->budget)
+									<p><span class="fw-bold">Chi phí:</span> <span class="text-primary"> ${{ number_format($phim->budget, 0, '.', ',') }}</span></p>
+								@endif
+
+								@if ($phim->domestic)
+									<p><span class="fw-bold">Doanh thu trong nước:</span> <span class="text-primary"> ${{ number_format($phim->domestic, 0, '.', ',') }}</span></p>
+								@else
+									@php
+										$phim->domestic = 0;
+									@endphp
+								@endif
+
+								@php
+									$allGross = 0;
+									foreach ($gross as $g) {
+									    $allGross = $allGross + intval($g);
+									}
+								@endphp
+
+								<p><span class="fw-bold">Doanh thu quốc tế:</span> <span class="text-primary"> ${{ number_format($allGross, 0, '.', ',') }}</span></p>
+								<p><span class="fw-bold">Tổng doanh thu:</span> <span class="text-primary"> ${{ number_format($phim->domestic + $allGross, 0, '.', ',') }}</span></p>
+
 								<div class="summary">
-									<p><b>Summary</b></p>
+									<p class="fw-bold">Tóm lược:</p>
 									<span>{!! $phim->summary !!}</span>
 
 								</div>
@@ -65,16 +87,20 @@
 				</div>
 			</div>
 
-			<div class="col-md-12">
-				<h3 class="text-center">Doanh thu ngày mở bán của {{ $phim->name_vi }}</h3>
-				<div id="opening" style="width: 100%;height:400px;"></div>
+			<div class="col-md-12 my-4">
+				<h3 class="text-center">Biểu đồ doanh thu thị trường quốc tế ngày mở bán của {{ $phim->name_vi }}</h3>
+				<div id="opening" class="p-3 my-5" style="width: 100%;height:500px;"></div>
 			</div>
 
 			<div class="col-md-12 my-4">
-				<h3 class="text-center">Tổng doanh thu của {{ $phim->name_vi }} </h3>
+				<h3 class="text-center">Biểu đồ tổng doanh thu thị trường quốc tế của {{ $phim->name_vi }} </h3>
 
-				<div id="gross" style="width: 100%;height:400px;"></div>
+				<div id="gross" class="p-3 my-5" style="width: 100%;height:500px;"></div>
 			</div>
+		</div>
+
+		<div class="row">
+			<h3 class="fw-bold">Các diễn viên tham gia</h3>
 		</div>
 	</div>
 
@@ -83,200 +109,168 @@
 {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js" integrity="sha512-EmNxF3E6bM0Xg1zvmkeYD3HDBeGxtsG92IxFt1myNZhXdCav9MzvuH/zNMBU1DmIPN6njrhX1VTbqdJxQ2wHDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-	opening()
-	gross()
+	pieChartOpening()
+	pieChartGross()
 
-	function opening() {
+	function pieChartOpening() {
+
 		var chartDom = document.getElementById('opening');
 		var myChart = echarts.init(chartDom);
 		var option;
 
-		let dataAxis = {!! json_encode($labels_opening) !!};
-		let data = {!! json_encode($opening) !!};
-		let yMax = {!! max($opening) !!};
-		let dataShadow = [];
-		for (let i = 0; i < data.length; i++) {
-			dataShadow.push(yMax);
+
+		var value_arr = {!! json_encode($opening) !!};
+		var name_arr = {!! json_encode($labels_opening) !!};
+		var data_arr = [];
+
+		for (let i = 0; i < value_arr.length; i++) {
+			data_arr.push({
+				value: value_arr[i],
+				name: name_arr[i]
+			});
 		}
+		const data = genData();
 		option = {
 			title: {
-				text: '{!! $lable_name_opening !!}',
-				// subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+				text: '',
+				subtext: '',
+				left: 'center'
 			},
-			xAxis: {
-				data: dataAxis,
-				axisLabel: {
-					inside: true,
-					color: '#000'
-				},
-				axisTick: {
-					show: false
-				},
-				axisLine: {
-					show: false
-				},
-				z: 10
-			},
-			yAxis: {
-				axisLine: {
-					show: false
-				},
-				axisTick: {
-					show: false
-				},
-				axisLabel: {
-					color: '#999'
+			tooltip: {
+				trigger: 'item',
+				formatter: function(params) {
+					return `${params.seriesName} <br/><b>${params.name}</b>: <b class="text-danger">${params.value.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</b> (${params.percent}%)`;
 				}
+
+
 			},
-			dataZoom: [{
-				type: 'inside'
-			}],
+			legend: {
+				type: 'scroll',
+				orient: 'vertical',
+				right: 10,
+				top: 20,
+				bottom: 20,
+				data: data.legendData
+			},
 			series: [{
-				type: 'bar',
-				showBackground: true,
-				itemStyle: {
-					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-							offset: 0,
-							color: '#83bff6'
-						},
-						{
-							offset: 0.5,
-							color: '#188df0'
-						},
-						{
-							offset: 1,
-							color: '#188df0'
-						}
-					])
-				},
+				name: 'Country',
+				type: 'pie',
+				radius: '70%',
+				center: ['40%', '50%'],
+				data: data.seriesData,
 				emphasis: {
 					itemStyle: {
-						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-								offset: 0,
-								color: '#2378f7'
-							},
-							{
-								offset: 0.7,
-								color: '#2378f7'
-							},
-							{
-								offset: 1,
-								color: '#83bff6'
-							}
-						])
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
 					}
-				},
-				data: data
+				}
 			}]
 		};
-		// Enable data zoom when user click bar.
-		const zoomSize = 2;
-		myChart.on('click', function(params) {
-			console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-			myChart.dispatchAction({
-				type: 'dataZoom',
-				startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-				endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
-			});
-		});
+
+		function genData() {
+			// prettier-ignore
+			const nameList = {!! json_encode($labels_opening) !!};
+			// const legendData = [];
+			// const seriesData = [];
+			legendData = nameList;
+			seriesData = data_arr;
+			return {
+				legendData: legendData,
+				seriesData: seriesData
+			};
+
+			function makeWord(max, min) {
+				const nameLen = Math.ceil(Math.random() * max + min);
+				const name = [];
+				for (var i = 0; i < nameLen; i++) {
+					name.push(nameList[Math.round(Math.random() * nameList.length - 1)]);
+				}
+				return name.join('');
+			}
+		}
 
 		option && myChart.setOption(option);
 
 	}
 
-	function gross() {
+	function pieChartGross() {
+
 		var chartDom = document.getElementById('gross');
 		var myChart = echarts.init(chartDom);
 		var option;
 
-		let dataAxis = {!! json_encode($labels_gross) !!};
-		let data = {!! json_encode($gross) !!};
-		let yMax = {!! max($gross) !!};
-		let dataShadow = [];
-		for (let i = 0; i < data.length; i++) {
-			dataShadow.push(yMax);
+
+		var value_arr = {!! json_encode($gross) !!};
+		var name_arr = {!! json_encode($labels_gross) !!};
+		var data_arr = [];
+
+		for (let i = 0; i < value_arr.length; i++) {
+			data_arr.push({
+				value: value_arr[i],
+				name: name_arr[i]
+			});
 		}
+		const data = genData();
 		option = {
 			title: {
-				text: '{!! $lable_name_gross !!}',
-				// subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+				text: '',
+				subtext: '',
+				left: 'center'
 			},
-			xAxis: {
-				data: dataAxis,
-				axisLabel: {
-					inside: true,
-					color: '#000'
-				},
-				axisTick: {
-					show: false
-				},
-				axisLine: {
-					show: false
-				},
-				z: 10
-			},
-			yAxis: {
-				axisLine: {
-					show: false
-				},
-				axisTick: {
-					show: false
-				},
-				axisLabel: {
-					color: '#999'
+			tooltip: {
+				trigger: 'item',
+				formatter: function(params) {
+					return `${params.seriesName} <br/><b>${params.name}</b>: <b class="text-danger">${params.value.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</b> (${params.percent}%)`;
 				}
+
+
 			},
-			dataZoom: [{
-				type: 'inside'
-			}],
+			legend: {
+				type: 'scroll',
+				orient: 'vertical',
+				right: 10,
+				top: 20,
+				bottom: 20,
+				data: data.legendData
+			},
 			series: [{
-				type: 'bar',
-				showBackground: true,
-				itemStyle: {
-					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-							offset: 0,
-							color: '#83bff6'
-						},
-						{
-							offset: 0.5,
-							color: '#188df0'
-						},
-						{
-							offset: 1,
-							color: '#188df0'
-						}
-					])
-				},
+				name: 'Country',
+				type: 'pie',
+				radius: '70%',
+				center: ['40%', '50%'],
+				data: data.seriesData,
 				emphasis: {
 					itemStyle: {
-						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-								offset: 0,
-								color: '#2378f7'
-							},
-							{
-								offset: 0.7,
-								color: '#2378f7'
-							},
-							{
-								offset: 1,
-								color: '#83bff6'
-							}
-						])
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
 					}
-				},
-				data: data
+				}
 			}]
 		};
-		// Enable data zoom when user click bar.
-		const zoomSize = 2;
-		myChart.on('click', function(params) {
-			console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-			myChart.dispatchAction({
-				type: 'dataZoom',
-				startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-				endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
-			});
-		});
+
+		function genData() {
+			// prettier-ignore
+			const nameList = {!! json_encode($labels_gross) !!};
+			// const legendData = [];
+			// const seriesData = [];
+			legendData = nameList;
+			seriesData = data_arr;
+			return {
+				legendData: legendData,
+				seriesData: seriesData
+			};
+
+			function makeWord(max, min) {
+				const nameLen = Math.ceil(Math.random() * max + min);
+				const name = [];
+				for (var i = 0; i < nameLen; i++) {
+					name.push(nameList[Math.round(Math.random() * nameList.length - 1)]);
+				}
+				return name.join('');
+			}
+		}
 
 		option && myChart.setOption(option);
 

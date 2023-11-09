@@ -84,7 +84,7 @@ https://templatemo.com/tm-568-digimedia
 						<!-- ***** Menu Start ***** -->
 						<ul class="nav">
 							<li class="scroll-to-section"><a href="{{ route('home.index') }}" class="active">Home</a></li>
-							<li class="scroll-to-section"><a href="#about">Tất cả phim</a></li>
+							<li class="scroll-to-section"><a href="{{ route('phim.index') }}">Tất cả phim</a></li>
 							<li class="scroll-to-section"><a href="#services">Review Phim</a></li>
 							<li class="scroll-to-section"><a href="#portfolio">Chê Phim</a></li>
 							<li class="scroll-to-section"><a href="#blog">Blog</a></li>

@@ -85,10 +85,10 @@ https://templatemo.com/tm-568-digimedia
 						<ul class="nav">
 							<li class="scroll-to-section"><a href="{{ route('home.index') }}" class="active">Home</a></li>
 							<li class="scroll-to-section"><a href="{{ route('phim.index') }}">Tất cả phim</a></li>
+							<li class="scroll-to-section"><a href="{{ route('phim.sosanh') }}">So sánh phim</a></li>
 							<li class="scroll-to-section"><a href="#services">Review Phim</a></li>
 							<li class="scroll-to-section"><a href="#portfolio">Chê Phim</a></li>
 							<li class="scroll-to-section"><a href="#blog">Blog</a></li>
-							<li class="scroll-to-section"><a href="#contact">Contact</a></li>
 							<li class="scroll-to-section">
 								<div class="border-first-button"><a href="#contact">Đăng ký</a></div>
 							</li>

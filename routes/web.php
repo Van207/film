@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\FilmController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\home\HomeController;
+use App\Http\Controllers\Home\SoSanhController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,4 +70,9 @@ Route::get("/{slug}_{id}", [HomeController::class, 'phim'])->name('home.phim');
 Route::prefix('phim')->group(function () {
 	Route::get('/', [HomeController::class, 'allFilm'])->name('phim.index');
 	Route::get('/s', [HomeController::class, 'film_filter'])->name('phim.filter');
+});
+
+Route::prefix('so-sanh')->group(function () {
+	Route::get('/', [SoSanhController::class, 'index'])->name('phim.sosanh');
+	Route::post('/', [SoSanhController::class, 'sosanh'])->name('phim.sosanhAjax');
 });

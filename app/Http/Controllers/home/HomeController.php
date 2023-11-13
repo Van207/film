@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Film;
 use App\Models\FilmRevenue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,24 @@ class HomeController extends Controller
 		$title = 'Trang Web Phân Tích Doanh Thu Độc Đáo';
 		$year = date('Y');
 		$top10 = Film::where('year', $year)->orderBy('worldwide', 'desc')->limit(10)->get();
-		return view('home.component.home.index', compact('title', 'top10'));
+
+		$top_action = DB::table('films')
+			->join('film_detail', 'films.id', '=', 'film_detail.film_id')
+			->where('films.year', '=', '2023')
+			->where('film_detail.title', '=', 'genres')
+			->where('film_detail.details', 'like', '%Action%')
+			->orderBy('films.worldwide', 'desc')
+			->limit(10)
+			->get();
+		$top_animation = DB::table('films')
+			->join('film_detail', 'films.id', '=', 'film_detail.film_id')
+			->where('films.year', '=', '2023')
+			->where('film_detail.title', '=', 'genres')
+			->where('film_detail.details', 'like', '%Animation%')
+			->orderBy('films.worldwide', 'desc')
+			->limit(10)
+			->get();
+		return view('home.component.home.index', compact('title', 'top10', 'top_action', 'top_animation'));
 	}
 
 	public function phim($slug, $id)
@@ -62,15 +80,22 @@ class HomeController extends Controller
 	{
 		$name = $request->input('name');
 		$year = $request->input('year');
+		$genre = $request->input('genre');
 
-		$film = Film::query();
-		// dd($name, $year);
+		$film = DB::table('films');
+
 		if ($name && $name != "") {
 			$film->where('name', 'LIKE', "%{$name}%")->orWhere('name_vi', 'LIKE', "%{$name}%");
 		}
 
 		if ($year && $year != '0') {
 			$film->where('year', $year);
+		}
+
+		if ($genre && $genre != "0") {
+			$film->join('film_detail', 'films.id', '=', 'film_detail.film_id')
+				->where('film_detail.title', '=', 'genres')
+				->where('film_detail.details', 'like', "%{$genre}%");
 		}
 
 

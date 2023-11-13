@@ -29,6 +29,26 @@
 										@endfor
 									</select>
 								</div>
+
+								<div class="col-md-3 col-lg-3">
+									<label for="name" class="col-form-label">Thể loại</label>
+									<select class="form-select select filter" name="genre">
+										<option value="0" {{ request('genre') == '' ? 'selected' : '' }}>Tất cả thể loại</option>
+										<option value="Action" {{ request('genre') == 'Action' ? 'selected' : '' }}>Hành động</option>
+										<option value="Romance" {{ request('genre') == 'Romance' ? 'selected' : '' }}>Lãng mạng</option>
+										<option value="Animation" {{ request('genre') == 'Animation' ? 'selected' : '' }}>Hoạt hình</option>
+										<option value="Adventure" {{ request('genre') == 'Adventure' ? 'selected' : '' }}>Phiêu lưu</option>
+										<option value="Comedy" {{ request('genre') == 'Comedy' ? 'selected' : '' }}>Hài kịch</option>
+										<option value="Fantasy" {{ request('genre') == 'Fantasy' ? 'selected' : '' }}>Viễn tưởng</option>
+										<option value="Family" {{ request('genre') == 'Family' ? 'selected' : '' }}>Gia đình</option>
+										<option value="History" {{ request('genre') == 'History' ? 'selected' : '' }}>Lịch sử</option>
+										<option value="War" {{ request('genre') == 'War' ? 'selected' : '' }}>Chiến tranh</option>
+										<option value="Sci-Fi" {{ request('genre') == 'Sci-Fi' ? 'selected' : '' }}>Khoa học viễn tưởng</option>
+										<option value="Biography" {{ request('genre') == 'Biography' ? 'selected' : '' }}>Tiểu sử</option>
+										<option value="Horror" {{ request('genre') == 'Horror' ? 'selected' : '' }}>Kinh dị</option>
+									</select>
+								</div>
+
 								<div class="col-md-3 col-lg-3 pb-1">
 									<button class="btn btn-success m-auto">Lọc phim</button>
 								</div>

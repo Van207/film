@@ -55,13 +55,13 @@
 						<th class="thFilm2"></th>
 					</tr>
 				</thead>
-				<tbody>
-
-				</tbody>
+				<tbody></tbody>
 			</table>
+
+			<div id="main" style="width: 100%;height:500px; display:none"></div>
 		</div>
 
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js" integrity="sha512-EmNxF3E6bM0Xg1zvmkeYD3HDBeGxtsG92IxFt1myNZhXdCav9MzvuH/zNMBU1DmIPN6njrhX1VTbqdJxQ2wHDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script>
 			let filmIds = [];
 
@@ -85,11 +85,66 @@
 
 			}
 
+			function charts(name1, name2, arr1, arr2) {
+
+				var chartDom = document.getElementById('main');
+				var myChart = echarts.init(chartDom);
+				var option;
+
+				option = {
+					title: {
+						text: 'Tổng doanh thu các quốc gia'
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: [name1, name2]
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: arr1.filter(item => item.country !== "Domestic").map(item => item.country).sort()
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+							name: name1,
+							type: 'line',
+							// stack: 'Total',
+							data: arr1.filter(item => item.country !== "Domestic").map(item => item.gross)
+						},
+						{
+							name: name2,
+							type: 'line',
+							// stack: 'Total',
+							data: arr2.filter(item => item.country !== "Domestic").map(item => item.gross)
+						}
+					]
+				};
+
+				option && myChart.setOption(option);
+
+			}
+
 			function compareMovies() {
 				$('.img_wrapper1').html("");
 				$('.img_wrapper2').html("");
 				$('.result-form table tbody').html('');
-
+				document.getElementById('main').style.display = 'block';
+				
 				if (filmIds.length === 2) {
 					$.ajax({
 						type: "POST",
@@ -100,7 +155,6 @@
 							'filmId2': filmIds[1]
 						},
 						success: function(data) {
-							// console.log(data.data);
 
 							$('.result-form table').show();
 							$('.sosanhbtn').show()
@@ -109,7 +163,7 @@
 
 							let film1 = data.data.film1;
 							let film2 = data.data.film2;
-							console.log(film1);
+
 							let detail1 = data.data.film1.film_detail;
 							let detail2 = data.data.film2.film_detail;
 
@@ -119,30 +173,37 @@
 							$('.img_wrapper1').append(`<img class="w-50" loading="lazy" src="${film1.img_big}" alt="${film1.name_vi}">`)
 							$('.img_wrapper2').append(`<img class="w-50" loading="lazy" src="${film2.img_big}" alt="${film2.name_vi}">`)
 							$('.result-form table tbody').append(`
-							<tr>
-								<td>Năm phát hành</td>
-								<td>${film1.year}</td>
-								<td>${film2.year}</td>
-							</tr>
-							<tr>
-								<td>Chi phí (Dự kiến)</td>
-								<td>${(film1.budget != "") ? parseFloat(film1.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}</td>
-								<td>${(film2.budget != "") ? parseFloat(film2.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}</td>
-							</tr>
-							<tr>
-								<td>Doanh thu toàn thế giới</td>
-								<td>${parseFloat(film1.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
-								<td>${parseFloat(film2.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
-							</tr>
-							<tr>
-								<td>Lợi nhuận</td>
-								<td>${(film1.budget != "") ? (((parseFloat(film1.worldwide) - parseFloat(film1.budget)) / parseFloat(film1.worldwide)) * 100).toFixed(2) + '%' : '-'}</td>
-								<td>${(film2.budget != "") ? (((parseFloat(film2.worldwide) - parseFloat(film2.budget)) / parseFloat(film2.worldwide)) * 100).toFixed(2) + '%' : '-'}</td>
-							</tr>`)
-							console.log(detail1);
-							console.log(detail2);
+								<tr>
+									<td>Năm phát hành</td>
+									<td>${film1.year}</td>
+									<td>${film2.year}</td>
+								</tr>
+								<tr>
+									<td>Chi phí (Dự kiến)</td>
+									<td>${(film1.budget != "") ? parseFloat(film1.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}</td>
+									<td>${(film2.budget != "") ? parseFloat(film2.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}</td>
+								</tr>
+								<tr>
+									<td>Doanh thu toàn thế giới</td>
+									<td>${parseFloat(film1.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+									<td>${parseFloat(film2.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+								</tr>
+								<tr>
+									<td>Lợi nhuận</td>
+									<td>${(film1.budget != "") ? (((parseFloat(film1.worldwide) - parseFloat(film1.budget)) / parseFloat(film1.worldwide)) * 100).toFixed(2) + '%' : '-'}</td>
+									<td>${(film2.budget != "") ? (((parseFloat(film2.worldwide) - parseFloat(film2.budget)) / parseFloat(film2.worldwide)) * 100).toFixed(2) + '%' : '-'}</td>
+								</tr>`)
 
+							const r1 = revenue1.filter(item1 => {
+								return revenue2.some(item2 => item2.country === item1.country);
+							});
 
+							const r2 = revenue2.filter(item2 => {
+								return revenue1.some(item1 => item1.country === item2.country);
+							});
+							// console.log(r1);
+							// console.log(r2);
+							charts(film1.name_vi, film2.name_vi, r1, r2)
 
 						},
 						error: function(error) {

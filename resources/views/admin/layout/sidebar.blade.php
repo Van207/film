@@ -61,6 +61,14 @@
 
 					</ul>
 				</li>
+				@if (Auth::check() && Auth::user()->role == '0')
+					<li class="nav-item ">
+						<a href="{{ route('user.index') }}" class="nav-link @if (Request::is('admin/user*') || Request::is('admin/users*')) active @endif">
+							<i class="ph-users-three"></i>
+							<span>Tài khoản</span>
+						</a>
+					</li>
+				@endif
 
 
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\Admincontroller;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\FilmController;
 use App\Http\Controllers\admin\PostController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\home\HomeController;
 use App\Http\Controllers\Home\SoSanhController;
@@ -61,6 +62,15 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
 		Route::post('/edit/{id}', [PostController::class, 'update']);
 		Route::get('/delete/{id}', [PostController::class, 'destroy'])->name('post.delete');
+	});
+
+	Route::prefix('/user')->group(function () {
+		Route::get('/', [UserController::class, 'index'])->name('user.index');
+		Route::get('/create', [UserController::class, 'create'])->name('user.create');
+		Route::post('/create', [UserController::class, 'store']);
+		Route::get('/{id}', [UserController::class, 'profile'])->name('user.profile');
+		Route::post('/{id}', [UserController::class, 'update']);
+		Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 	});
 });
 

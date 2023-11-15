@@ -34,7 +34,7 @@
 						<div class="mb-3 row">
 							<label class="col-form-label">Danh mục</label>
 							<div class="col-lg-12">
-								<select class="form-control select select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="category_id">
+								<select class="form-control select" name="category_id">
 									@foreach ($cate as $item)
 										<option value="{{ $item->id }}">{{ $item->name }}</option>
 									@endforeach
@@ -45,7 +45,13 @@
 						<div class="mb-3 row">
 							<label class="col-form-label">Thumbnail</label>
 							<div class="col-lg-12">
-								<input type="file" class="file-input" name="thumbnail">
+								<!-- AJAX upload -->
+								<div class="card">
+									<div class="card-body">
+										<input type="file" name="thumbnail" class="file-input file-input-ajax" multiple="false">
+									</div>
+								</div>
+								<!-- /AJAX upload -->
 
 							</div>
 						</div>

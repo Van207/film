@@ -29,7 +29,7 @@ class AuthController extends Controller
 
 		$arr = [
 			'email' => $request->email,
-			'password' => $request->password
+			'password' => $request->password,
 		];
 		if (Auth::attempt($arr)) {
 			return redirect()->route('homepage');

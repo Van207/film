@@ -75,7 +75,7 @@
 								<div class="mb-3">
 									<label class="form-label">Password</label>
 									<div class="form-control-feedback form-control-feedback-start">
-										<input type="password" class="form-control" placeholder="•••••••••••" name="password">
+										<input type="password" class="form-control" placeholder="" name="password">
 										<div class="form-control-feedback-icon">
 											<i class="ph-lock text-muted"></i>
 										</div>

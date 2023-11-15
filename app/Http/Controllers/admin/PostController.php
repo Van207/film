@@ -34,6 +34,7 @@ class PostController extends Controller
 	{
 		$title = 'Tạo bài viết';
 		$cate = Category::all();
+		
 		return view('admin.component.post.create', compact('title', 'cate'));
 	}
 

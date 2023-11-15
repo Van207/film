@@ -18,7 +18,10 @@ class CheckLogin
 	public function handle(Request $request, Closure $next)
 	{
 		if (Auth::check()) {
-			return $next($request);
+
+			// 0-superadmin, 1-admin, 2-user	
+			if (Auth::user()->role == '0' || Auth::user()->role == '1')
+				return $next($request);
 		} else {
 			return redirect()->route('login');
 		}

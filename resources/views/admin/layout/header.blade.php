@@ -31,8 +31,8 @@
 	<!-- /theme JS files -->
 	<script src="<?= asset('assets/js/app.js') ?>"></script>
 	<script src="<?= asset('assets/demo/pages/datatables_basic.js') ?>"></script>
-	{{-- <script src="<?= // asset('assets/demo/pages/uploader_bootstrap.js') ?>"></script> --}}
-	{{-- <script src="<?= // asset('assets/demo/pages/form_select2.js') ?>"></script> --}}
+	<script src="<?= asset('assets/demo/pages/uploader_bootstrap.js') ?>"></script>
+	<script src="<?= asset('assets/demo/pages/form_select2.js') ?>"></script>
 	@stack('styles')
 </head>
 
@@ -47,9 +47,9 @@
 			</div>
 
 			<div class="navbar-brand flex-1 flex-lg-0">
-				<a href="index.html" class="d-inline-flex align-items-center">
+				<a href="{{route('homepage')}}" class="d-inline-flex align-items-center">
 					<img src="../../../assets/images/logo_icon.svg" alt="">
-					<img src="../../../assets/images/logo_text_light.svg" class="d-none d-sm-inline-block h-16px ms-3" alt="">
+					<h3 class="d-none d-sm-inline-block h-16px ms-3 text-light">Quản trị</h3>
 				</a>
 			</div>
 

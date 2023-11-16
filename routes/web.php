@@ -79,7 +79,7 @@ Route::get("/", [HomeController::class, 'index'])->name('home.index');
 Route::get("/{slug}_{id}", [HomeController::class, 'phim'])->name('home.phim');
 Route::prefix('phim')->group(function () {
 	Route::get('/', [HomeController::class, 'allFilm'])->name('phim.index');
-	Route::get('/s', [HomeController::class, 'film_filter'])->name('phim.filter');
+	Route::get('/filter', [HomeController::class, 'film_filter'])->name('phim.filter');
 });
 
 Route::prefix('so-sanh')->group(function () {

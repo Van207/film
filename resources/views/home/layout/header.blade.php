@@ -10,6 +10,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
 	<link rel="shortcut icon" href="{{ asset('images/favicon.jpg') }}" type="image/x-icon">
 
 	<title>{!! $title !!}</title>
@@ -23,13 +25,12 @@
 	<link rel="stylesheet" href="<?= asset('home/assets/css/style.css') ?>">
 	<link rel="stylesheet" href="<?= asset('home/assets/css/animated.css') ?>">
 	<link rel="stylesheet" href="<?= asset('home/assets/css/owl.css') ?>">
-	<!--
-
-TemplateMo 568 DigiMedia
-
-https://templatemo.com/tm-568-digimedia
-
--->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	{{-- SELECT 2 --}}
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	@stack('css')
+	@stack('scripts')
 </head>
 
 <body>

@@ -36,17 +36,14 @@
 			<form id="compareForm">
 				@csrf
 				<label for="movieSelect">Chọn phim:</label>
-				<select class="form-select" name="movieSelect" id="movieSelect">
-					@foreach ($films as $film)
-						<option value="{{ $film->id }}">{{ $film->name_vi }}</option>
-					@endforeach
+				<select class="js-example-matcher-start form-control" id="movieSelect" name="movieSelect" style="width: 70%">
+					{{-- <option value="0">Chọn phim muốn so sánh</option> --}}
 				</select>
 				<button type="button" class="btn btn-primary sosanhbtn" onclick="selectMovie()">Chọn</button>
 			</form>
 		</div>
 
 		<div class="col-md-12 result-form">
-
 			<table class="table table-hover table-bordered text-center" style="display: none">
 				<thead>
 					<tr>
@@ -60,6 +57,7 @@
 
 			<div id="main" style="width: 100%;height:500px; display:none"></div>
 		</div>
+
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js" integrity="sha512-EmNxF3E6bM0Xg1zvmkeYD3HDBeGxtsG92IxFt1myNZhXdCav9MzvuH/zNMBU1DmIPN6njrhX1VTbqdJxQ2wHDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script>
@@ -144,7 +142,7 @@
 				$('.img_wrapper2').html("");
 				$('.result-form table tbody').html('');
 				document.getElementById('main').style.display = 'block';
-				
+
 				if (filmIds.length === 2) {
 					$.ajax({
 						type: "POST",
@@ -214,6 +212,35 @@
 					alert('Vui lòng chọn đủ 2 phim trước khi so sánh.');
 				}
 			}
+
+
+			// Select2
+			var data = {!! json_encode($filmData) !!};
+
+			function matchCustom(params, data) {
+				if ($.trim(params.term) === '') {
+					return data;
+				}
+				if (typeof data.text === 'undefined') {
+					return null;
+				}
+
+				var searchTerm = params.term.toLowerCase();
+				var dataText = data.text.toLowerCase();
+
+				if (dataText.indexOf(searchTerm) > -1) {
+					var modifiedData = $.extend({}, data, true);
+					modifiedData.text += ' (Khớp)';
+					return modifiedData;
+				}
+				return null;
+			}
+
+
+			$(".js-example-matcher-start").select2({
+				data: data,
+				matcher: matchCustom,
+			});
 		</script>
 	</div>
 </div>

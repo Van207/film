@@ -12,7 +12,14 @@ class SoSanhController extends Controller
 	{
 		$title = "So sánh phim";
 		$films = Film::all();
-		return view('home.component.sosanh.index', compact('title', 'films'));
+		$filmData = [];
+		foreach ($films as $film) {
+			$filmData[] = [
+				'id' => $film->id,
+				'text' => $film->name_vi
+			];
+		}
+		return view('home.component.sosanh.index', compact('title', 'films', 'filmData'));
 	}
 
 	// public function sosanh(Request $request)

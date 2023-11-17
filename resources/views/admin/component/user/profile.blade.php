@@ -17,7 +17,7 @@
 			<div class="row">
 				<div class="col-md-3 border-right">
 					<div class="d-flex flex-column align-items-center text-center p-3 py-5">
-						@if ($user->avatar != '')
+						@if (isset($user->avatar))
 							<img class="rounded-circle mt-5" width="150px" src="{{ asset('/images/user') . '/' . $user->avatar }}">
 						@else
 							<img class="rounded-circle mt-5" width="150px" src="{{ asset('/images/user') . '/user_empty.png' }}">
@@ -69,11 +69,21 @@
 							</div>
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Email</label>
-								<input type="text" class="form-control" name="email" placeholder="example@email.com" value="{{ $user->email }}">
+								<input type="email" class="form-control" name="email" placeholder="example@email.com" value="{{ $user->email }}">
 								@error('email')
 									<p class="text-danger">{{ $message }}</p>
 								@enderror
 							</div>
+
+							@if (Auth::user()->id == request()->id)
+								<div class="col-md-12 mb-3">
+									<label class="labels mb-1">Đổi mật khẩu</label>
+									<input type="password" class="form-control" name="password" value="">
+									@error('password')
+										<p class="text-danger">{{ $message }}</p>
+									@enderror
+								</div>
+							@endif
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Ngày sinh</label>
 								<input type="date" name="birth" class="form-control" value="{{ $user->birth }}">
@@ -96,6 +106,27 @@
 									<label>Nhập ghi chú</label>
 								</div>
 							</div>
+
+							<div class="col-md-12 mb-3">
+								<label class="labels mb-1">Vai trò</label>
+								<div class="border p-3 rounded">
+
+									<div class="form-check form-check-inline">
+										<input type="radio" class="form-check-input" name="role" id="role" value="0" @if ($user->role == 0) checked @endif>
+										<label class="form-check-label" for="role">Superadmin</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input type="radio" class="form-check-input" name="role" id="role" value="1" @if ($user->role == 1) checked @endif>
+										<label class="form-check-label" for="role">Admin</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input type="radio" class="form-check-input" name="role" id="role" value="2" @if ($user->role == 2) checked @endif>
+										<label class="form-check-label" for="role">Người dùng</label>
+									</div>
+								</div>
+							</div>
+
+
 							<div class="mb-3 row">
 								<label class="col-form-label">Ảnh đại diện</label>
 								<div class="col-lg-12">
@@ -121,10 +152,5 @@
 
 	</div>
 </div>
-</div>
-</div>
 
-</div>
-
-</div>
 @include('admin.layout.footer')

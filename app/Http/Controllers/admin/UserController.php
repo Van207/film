@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -29,17 +31,20 @@ class UserController extends Controller
 		$request->validate(
 			[
 				'name' => 'required|max:255',
-				'email' => 'required|email',
+				'email' => 'required|email|unique:users',
+				'phone' => 'unique:users',
 				'gender' => 'required',
-				'birth' => 'required',
+				'password' => 'required',
 			],
 			[
 				'name.required' => "Tên không được để trống!",
 				'name.max' => "Tên quá dài.",
 				'email.required' => "Email không được để trống!",
 				'email.email' => "Email không đúng định dạng",
+				'email.unique' => "Email đã tồn tại",
+				'phone.unique' => "Số điện thoại đã được sử dụng",
 				'gender.required' => "Giới tính không được để trống!",
-				'birth.required' => 'Ngày sinh không được để trống!',
+				'password.required' => 'Mật khẩu không được để trống!',
 			]
 		);
 
@@ -76,17 +81,25 @@ class UserController extends Controller
 		$request->validate(
 			[
 				'name' => 'required|max:255',
-				'email' => 'required|email',
+				'email' => [
+					'required',
+					'email',
+					Rule::unique('users', 'email')->ignore($id)
+				],
+				'phone' => [
+					'required',
+					Rule::unique('users', 'phone')->ignore($id)
+				],
 				'gender' => 'required',
-				'birth' => 'required',
 			],
 			[
 				'name.required' => "Tên không được để trống!",
 				'name.max' => "Tên quá dài.",
 				'email.required' => "Email không được để trống!",
 				'email.email' => "Email không đúng định dạng",
+				'email.unique' => "Email đã tồn tại",
+				'phone.unique' => "Số điện thoại đã được sử dụng",
 				'gender.required' => "Giới tính không được để trống!",
-				'birth.required' => 'Ngày sinh không được để trống!',
 			]
 		);
 		$user = User::find($id);
@@ -97,20 +110,27 @@ class UserController extends Controller
 		$user->birth = $request->birth;
 		$user->description = $request->description;
 		$user->phone = $request->phone;
+		$user->role = $request->role;
 
 		// Có hình ảnh cần update
 		if (isset($request->avatar) && $request->avatar != '') {
-
 			// Xóa ảnh cũ
 			if ($user->avatar && $user->avatar != '') {
 				Storage::disk('user')->delete($user->avatar);
 			}
-
 			$file = $request->avatar;
 			$tenhinhanh = Str::of($request->name)->slug('_') . '.' . $file->getClientOriginalExtension();
 			Storage::disk('user')->put($tenhinhanh, File::get($file));
 			$user->avatar = $tenhinhanh;
 		}
+
+		if (isset($request->password)) {
+			$user->password = Hash::make($request->password);
+			$user->save();
+			$authController = new AuthController();
+			$authController->logout(request());
+		}
+
 		$user->save();
 		return redirect()->route('user.profile', $id)->with('msg', "Cập nhật thông tin thành công!");
 	}
@@ -125,5 +145,13 @@ class UserController extends Controller
 		}
 		$user->delete();
 		return redirect()->route('user.index')->with('success', 'Đã xóa!');
+	}
+
+	public function viewAccount($id)
+	{
+		$title = "Thông tin tài khoản cá nhân";
+		$user = User::find($id);
+
+		return view('admin.component.account.index', compact('title', 'user'));
 	}
 }

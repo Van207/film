@@ -1699,8 +1699,8 @@ Portfolio
 .our-portfolio .owl-nav {
 	display: inline-block !important;
 	position: absolute;
-	top: -125px;
-	right: 15%;
+	top: -90px;
+	right: 2%;
 	max-width: 1320px;
 }
 
@@ -1715,7 +1715,7 @@ Portfolio
 	text-align: center;
 	line-height: 46px;
 	font-size: 30px;
-	background-color: #eee;
+	background-color: #fe794e;
 	border-radius: 50%;
 	color: #fff;
 	transition: all 0.5s;

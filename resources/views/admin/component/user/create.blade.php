@@ -21,7 +21,7 @@
 							<div class="row mt-3">
 								<div class="col-md-12 mb-3">
 									<label class="labels mb-1">Họ tên</label>
-									<input type="text" class="form-control" placeholder="Full name" name="name">
+									<input type="text" class="form-control" placeholder="Họ và tên" name="name" value="{{ old('name') }}">
 									@error('name')
 										<p class="text-danger">{{ $message }}</p>
 									@enderror
@@ -47,14 +47,14 @@
 							</div>
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Số điện thoại</label>
-								<input type="text" class="form-control" name="phone" placeholder="enter phone number">
+								<input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại" value="{{ old('phone') }}">
 								@error('phone')
 									<p class="text-danger">{{ $message }}</p>
 								@enderror
 							</div>
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Email</label>
-								<input type="text" class="form-control" name="email" placeholder="example@email.com">
+								<input type="text" class="form-control" name="email" placeholder="example@email.com" value="{{ old('email') }}">
 								@error('email')
 									<p class="text-danger">{{ $message }}</p>
 								@enderror
@@ -70,7 +70,7 @@
 
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Ngày sinh</label>
-								<input type="date" name="birth" class="form-control">
+								<input type="date" name="birth" class="form-control" value="{{ old('birth') }}">
 								@error('birth')
 									<p class="text-danger">{{ $message }}</p>
 								@enderror
@@ -78,7 +78,7 @@
 
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Địa chỉ</label>
-								<input type="text" class="form-control" name="address" placeholder="Enter address">
+								<input type="text" class="form-control" name="address" placeholder="Enter address" value="{{ old('address') }}">
 								@error('address')
 									<p class="text-danger">{{ $message }}</p>
 								@enderror
@@ -86,7 +86,7 @@
 							<div class="col-md-12 mb-3">
 								<label class="labels mb-1">Ghi chú</label>
 								<div class="form-floating">
-									<textarea class="form-control" name="description" placeholder="Placeholder" style="height: 100px;"></textarea>
+									<textarea class="form-control" name="description" placeholder="Placeholder" style="height: 100px;">{{ old('<description></description>') }}</textarea>
 									<label>Nhập ghi chú</label>
 								</div>
 							</div>
@@ -95,15 +95,15 @@
 								<div class="border p-3 rounded">
 
 									<div class="form-check form-check-inline">
-										<input type="radio" class="form-check-input" name="role" id="role" value="2">
+										<input type="radio" class="form-check-input" name="role" id="role" value="0">
 										<label class="form-check-label" for="role">Superadmin</label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input type="radio" class="form-check-input" name="role" id="role" value="0"checked>
+										<input type="radio" class="form-check-input" name="role" id="role" value="1" checked>
 										<label class="form-check-label" for="role">Admin</label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input type="radio" class="form-check-input" name="role" id="role" value="1">
+										<input type="radio" class="form-check-input" name="role" id="role" value="2">
 										<label class="form-check-label" for="role">Người dùng</label>
 									</div>
 								</div>

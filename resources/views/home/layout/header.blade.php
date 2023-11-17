@@ -84,12 +84,21 @@
 						<!-- ***** Logo End ***** -->
 						<!-- ***** Menu Start ***** -->
 						<ul class="nav">
-							<li class="scroll-to-section"><a href="{{ route('home.index') }}" class="active">Home</a></li>
-							<li class="scroll-to-section"><a href="{{ route('phim.index') }}">Tất cả phim</a></li>
-							<li class="scroll-to-section"><a href="{{ route('phim.sosanh') }}">So sánh phim</a></li>
-							<li class="scroll-to-section"><a href="#services">Review Phim</a></li>
-							<li class="scroll-to-section"><a href="#portfolio">Chê Phim</a></li>
-							<li class="scroll-to-section"><a href="#blog">Blog</a></li>
+							<li class="scroll-to-section">
+								<a href="{{ route('home.index') }}" class="{{ request()->routeIs('home.index') ? 'active' : '' }}">Home</a>
+							</li>
+							<li class="scroll-to-section">
+								<a href="{{ route('phim.index') }}" class="{{ request()->routeIs('phim.index') ? 'active' : '' }}">Tất cả phim</a>
+							</li>
+							<li class="scroll-to-section">
+								<a href="{{ route('phim.sosanh') }}" class="{{ request()->routeIs('phim.sosanh') ? 'active' : '' }}">So sánh phim</a>
+							</li>
+							<li class="scroll-to-section">
+								<a href="#">Review Phim</a>
+							</li>
+							<li class="scroll-to-section">
+								<a href="#">Chê Phim</a>
+							</li>
 							<li class="scroll-to-section">
 								<div class="border-first-button"><a href="#contact">Đăng ký</a></div>
 							</li>

@@ -33,7 +33,7 @@
 					<i class="ph-dots-three sidebar-resize-show"></i>
 				</li>
 				<li class="nav-item">
-					<a href="{{ route('homepage') }}" class="nav-link @if (Request::is('admin/')) active @endif">
+					<a href="{{ route('homepage') }}" class="nav-link {{ request()->routeIs('homepage') ? 'active' : '' }}">
 						<i class="ph-activity"></i>
 						<span>
 							Dashboard
@@ -69,6 +69,13 @@
 						</a>
 					</li>
 				@endif
+
+				<li class="nav-item ">
+					<a href="#" class="nav-link">
+						<i class="ph-circles-three-plus"></i>
+						<span>Thu thập dữ liệu</span>
+					</a>
+				</li>
 
 
 

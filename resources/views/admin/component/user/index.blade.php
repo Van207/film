@@ -22,7 +22,11 @@
 					<div class="card">
 						<div class="card-body text-center">
 							<div class="card-img-actions d-inline-block mb-3">
-								<img class="img-fluid rounded-circle" src="{{ asset('/images/user') . '/' . $user->avatar }}" width="170" height="170" alt="">
+								@if (isset($user->avatar))
+									<img class="img-fluid rounded-circle" src="{{ asset('/images/user') . '/' . $user->avatar }}" width="170" height="170" alt="">
+								@else
+									<img class="img-fluid rounded-circle" src="{{ asset('/images/user') . '/user_empty.png' }}" width="170" height="170" alt="">
+								@endif
 
 							</div>
 

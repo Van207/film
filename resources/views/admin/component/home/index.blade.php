@@ -17,7 +17,7 @@
 
 					<div class="flex-fill text-end">
 						<h4 class="mb-0">{{ $phim_count }}</h4>
-						<a class="text-muted" href="{{ route('film.index') }}">Tổng số Phim</a>
+						<a class="text-success" href="{{ route('film.index') }}" title="Quản lý phim">Tổng số Phim</a>
 					</div>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 
 					<div class="flex-fill text-end">
 						<h4 class="mb-0">{{ $user_count }}</h4>
-						<span class="text-muted">Tổng người dùng</span>
+						<a href="{{ route('user.index') }}" class="text-indigo" title="Quản lý tài khoản">Tổng người dùng</a>
 					</div>
 				</div>
 			</div>

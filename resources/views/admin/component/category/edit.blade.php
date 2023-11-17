@@ -14,7 +14,21 @@
 						<div class="row mb-3">
 							<label class="col-form-label col-lg-3">Tên danh mục</label>
 							<div class="col-lg-9">
-								<input type="text" class="form-control" name="name" value="{{ $cate->name }}">
+								<input type="text" class="form-control" name="name" id="name" value="{{ $cate->name }}">
+								@error('name')
+									<p class="text-danger">{{ $message }}</p>
+								@enderror
+							</div>
+						</div>
+						<div class="row mb-3">
+							<span>Đường dẫn:</span>
+							<span id="slug_text" class="text-pink">{{ $cate->slug }}</span>
+
+							<div class="col-lg-12">
+								<input type="text" class="form-control d-none" name="slug" id="slug" value="{{ $cate->slug }}">
+								@error('slug')
+									<p class="text-danger">{{ $message }}</p>
+								@enderror
 							</div>
 						</div>
 						<div class="row mb-3">
@@ -38,4 +52,34 @@
 	</div>
 
 </div>
+<script>
+	$(document).ready(function() {
+		$('#name').on('input', function() {
+			var name = $(this).val();
+			var slug = slugify(name);
+			$('#slug').val(slug);
+			$('#slug_text').text(slug);
+		});
+
+		// Hàm slugify để tạo slug từ chuỗi
+		function slugify(input) {
+			if (!input)
+				return '';
+
+			// make lower case and trim
+			var slug = input.toLowerCase().trim();
+
+			// remove accents from charaters
+			slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+
+			// replace invalid chars with spaces
+			slug = slug.replace(/[^a-z0-9\s-]/g, ' ').trim();
+
+			// replace multiple spaces or hyphens with a single hyphen
+			slug = slug.replace(/[\s-]+/g, '-');
+
+			return slug;
+		}
+	});
+</script>
 @include('admin.layout.footer')

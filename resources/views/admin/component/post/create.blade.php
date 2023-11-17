@@ -16,10 +16,23 @@
 						<div class="row mb-3">
 							<label class="col-form-label">Tiêu đề</label>
 							<div class="col-lg-12">
-								<input type="text" class="form-control" name="title">
+								<input type="text" class="form-control" name="title" id="title">
+								@error('title')
+									<p class="text-danger">{{ $message }}</p>
+								@enderror
 							</div>
 						</div>
+						<div class="row mb-3">
+							<span>Đường dẫn:</span>
+							<span id="slug_text" class="text-pink"></span>
 
+							<div class="col-lg-12">
+								<input type="text" class="form-control d-none" name="slug" id="slug">
+								@error('slug')
+									<p class="text-danger">{{ $message }}</p>
+								@enderror
+							</div>
+						</div>
 
 						<div class="row mb-3">
 							<label class="col-form-label">Nội dung</label>
@@ -28,6 +41,9 @@
 								<script>
 									CKEDITOR.replace('content');
 								</script>
+								@error('content')
+									<p class="text-danger">{{ $message }}</p>
+								@enderror
 							</div>
 						</div>
 
@@ -83,4 +99,34 @@
 	</div>
 
 </div>
+<script>
+	$(document).ready(function() {
+		$('#title').on('input', function() {
+			var title = $(this).val();
+			var slug = slugify(title);
+			$('#slug').val(slug);
+			$('#slug_text').text(slug);
+		});
+
+		// Hàm slugify để tạo slug từ chuỗi
+		function slugify(input) {
+			if (!input)
+				return '';
+
+			// make lower case and trim
+			var slug = input.toLowerCase().trim();
+
+			// remove accents from charaters
+			slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+
+			// replace invalid chars with spaces
+			slug = slug.replace(/[^a-z0-9\s-]/g, ' ').trim();
+
+			// replace multiple spaces or hyphens with a single hyphen
+			slug = slug.replace(/[\s-]+/g, '-');
+
+			return slug;
+		}
+	});
+</script>
 @include('admin.layout.footer')

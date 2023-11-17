@@ -5,8 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\returnValue;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -40,9 +40,21 @@ class CategoryController extends Controller
 	 */
 	public function store(Request $request)
 	{
+		$request->validate(
+			[
+				'name' => 'required|max:255',
+				'slug' => 'unique:category,slug',
+			],
+			[
+				'name.required' => "Tiêu đề không được để trống",
+				'name.max' => "Tiêu đề quá dài",
+				'slug.unique' => "Đường dẫn đã tồn tại",
+			]
+		);
 		$cate = new Category();
 		$cate->name = $request->name;
 		$cate->description = $request->description;
+		$cate->slug = Str::slug($request->name);
 		$cate->save();
 		return redirect()->route('category.index')->with('success', 'Đã thêm danh mục!');
 	}
@@ -80,9 +92,21 @@ class CategoryController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
+		$request->validate(
+			[
+				'name' => 'required|max:255',
+				'slug' => 'unique:category,slug',
+			],
+			[
+				'name.required' => "Tiêu đề không được để trống",
+				'name.max' => "Tiêu đề quá dài",
+				'slug.unique' => "Đường dẫn đã tồn tại",
+			]
+		);
 		$cate = Category::find($id);
 		$cate->name = $request->name;
 		$cate->description = $request->description;
+		$cate->slug = Str::slug($request->name);
 		$cate->save();
 		return redirect()->route('category.index')->with('success', 'Đã cập nhật danh mục!');
 	}

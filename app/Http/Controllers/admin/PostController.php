@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -34,7 +35,7 @@ class PostController extends Controller
 	{
 		$title = 'Tạo bài viết';
 		$cate = Category::all();
-		
+
 		return view('admin.component.post.create', compact('title', 'cate'));
 	}
 
@@ -50,6 +51,14 @@ class PostController extends Controller
 			[
 				'title' => 'required|max:255',
 				'content' => 'required',
+				'slug' => 'unique:post,slug',
+			],
+			[
+				'title.required' => "Tiêu đề không được để trống",
+				'title.max' => "Tiêu đề quá dài",
+				'content.required' => "Nội dung trống",
+				'slug.unique' => "Đường dẫn đã tồn tại",
+
 			]
 		);
 
@@ -66,7 +75,7 @@ class PostController extends Controller
 		$post->content = $request->content;
 		$post->category_id = $request->category_id;
 		$post->status = $request->status;
-		$post->slug = Str::slug($request->title);
+		$post->slug = $request->slug;
 		$post->post_date = date('Y-m-d');
 		$post->user_id = Auth::user()->id;
 		$post->save();
@@ -107,6 +116,20 @@ class PostController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
+		$request->validate(
+			[
+				'title' => 'required|max:255',
+				'content' => 'required',
+				'slug' => Rule::unique('category', 'slug')->ignore($id),
+			],
+			[
+				'title.required' => "Tiêu đề không được để trống",
+				'title.max' => "Tiêu đề quá dài",
+				'content.required' => "Nội dung trống",
+				'slug.unique' => "Đường dẫn đã tồn tại",
+
+			]
+		);
 		$post = Post::find($id);
 
 		// Có hình ảnh mới xử lý

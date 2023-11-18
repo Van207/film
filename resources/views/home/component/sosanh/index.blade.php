@@ -1,5 +1,5 @@
 @include('home.layout.header')
-<div id="portfolio" class=" section" style="padding-top:130px">
+<div id="portfolio" class="section" style="padding-top:130px; min-height: 550px">
 	<div class="container">
 		<h1 class="mb-4">So sánh phim</h1>
 
@@ -89,7 +89,7 @@
 				<tbody></tbody>
 			</table>
 
-			<div id="main" style="width: 100%;height:500px; display:none"></div>
+			<div id="chart" style="width: 100%;height:500px; display:none"></div>
 		</div>
 
 
@@ -144,12 +144,12 @@
 				document.getElementById('movieSelectionForm').style.display = 'none';
 				$('.sosanhbtn').show()
 				$('.table').hide()
-				$('#main').hide()
+				$('#chart').hide()
 			}
 
 			function soSanhPhim() {
 				$('.result-form table tbody').html('');
-				document.getElementById('main').style.display = 'block';
+				document.getElementById('chart').style.display = 'block';
 
 				if (filmIds.length === 2) {
 					$.ajax({
@@ -167,7 +167,7 @@
 							$('.result-loading').hide();
 
 							$('.table').show()
-							$('#main').show()
+							$('#chart').show()
 							$('.result-form table').show();
 							$('.sosanhbtn').hide()
 
@@ -180,8 +180,6 @@
 							let revenue1 = data.data.film1.film_revenue;
 							let revenue2 = data.data.film2.film_revenue;
 
-							// $('.img_wrapper1').append(`<img class="w-50" loading="lazy" src="${film1.img_big}" alt="${film1.name_vi}">`)
-							// $('.img_wrapper2').append(`<img class="w-50" loading="lazy" src="${film2.img_big}" alt="${film2.name_vi}">`)
 							$('.result-form table tbody').append(`
 								<tr>
 									<td>Năm phát hành</td>
@@ -229,13 +227,13 @@
 
 			function charts(name1, name2, arr1, arr2) {
 
-				var chartDom = document.getElementById('main');
+				var chartDom = document.getElementById('chart');
 				var myChart = echarts.init(chartDom);
 				var option;
 
 				option = {
 					title: {
-						text: 'Tổng doanh thu các quốc gia'
+						text: 'Doanh thu theo quốc gia'
 					},
 					tooltip: {
 						trigger: 'axis'

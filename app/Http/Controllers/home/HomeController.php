@@ -84,7 +84,7 @@ class HomeController extends Controller
 
 		$film = DB::table('films');
 
-		if ($name && $name != "") {
+		if ($name !== null && $name != "") {
 			$film->where('name', 'LIKE', "%{$name}%")->orWhere('name_vi', 'LIKE', "%{$name}%");
 		}
 
@@ -98,10 +98,7 @@ class HomeController extends Controller
 				->where('film_detail.details', 'like', "%{$genre}%");
 		}
 
-
-
-		$films = $film->simplePaginate(16)->appends(['name' => $name, 'year' => $year]);
-		// return response()->json($film);
+		$films = $film->simplePaginate(16)->appends(['name' => $name, 'year' => $year, 'genre' => $genre]);
 		$title = "Danh sách phim";
 		return view('home.component.phim.all', compact('title', 'films'));
 	}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Film;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SoSanhController extends Controller
 {
@@ -65,6 +66,19 @@ class SoSanhController extends Controller
 			'success' => true,
 			'message' => 'Xử lý thành công',
 			'data' => $results,
+		]);
+	}
+
+	function getImgAjax(Request $request)
+	{
+		$film = Film::find($request->input('id'));
+		$film_url = Str::slug($film->name) . "_" . $film->id;
+		return response()->json([
+			'success' => true,
+			'message' => 'Xử lý thành công',
+			'img' => $film->img_big,
+			'name' => $film->name_vi,
+			'url' => $film_url
 		]);
 	}
 }

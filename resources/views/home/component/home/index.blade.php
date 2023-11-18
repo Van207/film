@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="col-lg-5">
 				<div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-					<h4>Top phim hành động</h4>
+					<h4><a href="{{ route('phim.filter') . '?genre=Action' }}">Top phim hành động</a></h4>
 					<div class="line-dec"></div>
 				</div>
 			</div>
@@ -79,7 +79,7 @@
 			<div class="col-lg-5">
 				<div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
 
-					<h4>Top phim hoạt hình</h4>
+					<h4><a href="{{ route('phim.filter') . '?genre=animation' }}">Top phim hoạt hình</a></h4>
 					<div class="line-dec"></div>
 				</div>
 			</div>

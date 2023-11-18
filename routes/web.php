@@ -86,4 +86,5 @@ Route::prefix('phim')->group(function () {
 Route::prefix('so-sanh')->group(function () {
 	Route::get('/', [SoSanhController::class, 'index'])->name('phim.sosanh');
 	Route::post('/', [SoSanhController::class, 'sosanh'])->name('phim.sosanhAjax');
+	Route::GET('/getImg', [SoSanhController::class, 'getImgAjax'])->name('phim.getImgAjax');
 });

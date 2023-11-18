@@ -28,6 +28,18 @@
 								<div></div>
 							</div>
 						</div>
+
+
+						{{-- Chọn phim --}}
+						<div id="movieSelectionForm1" style="display: none;" class="mt-4 py-3">
+							<form id="compareForm">
+								@csrf
+								<label for="movieSelect1">Chọn phim:</label>
+								<select class="js-example-matcher-start form-control" id="movieSelect1" name="movieSelect1" style="width: 70%"></select>
+								<button type="button" class="btn btn-primary" onclick="selectFilm(1)">Chọn</button>
+							</form>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -55,6 +67,18 @@
 								<div></div>
 							</div>
 						</div>
+
+
+						{{-- Chọn Phim --}}
+						<div id="movieSelectionForm2" style="display: none;" class="mt-4 py-3">
+							<form id="compareForm">
+								@csrf
+								<label for="movieSelect1">Chọn phim:</label>
+								<select class="js-example-matcher-start form-control" id="movieSelect2" name="movieSelect2" style="width: 70%"></select>
+								<button type="button" class="btn btn-primary" onclick="selectFilm(2)">Chọn</button>
+							</form>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -62,16 +86,17 @@
 		<div class="col-md-12 text-center my-3">
 			<button type="button" class="btn btn-success sosanhbtn" onclick="soSanhPhim()">So sánh</button>
 		</div>
+
 		<!-- Form chọn phim (ẩn ban đầu) -->
-		<div id="movieSelectionForm" style="display: none;" class="mt-4">
+		{{-- <div id="movieSelectionForm" style="display: none;" class="mt-4">
 			<form id="compareForm">
 				@csrf
 				<label for="movieSelect">Chọn phim:</label>
 				<select class="js-example-matcher-start form-control" id="movieSelect" name="movieSelect" style="width: 70%">
 				</select>
-				<button type="button" class="btn btn-primary " onclick="selectFilm()">Chọn</button>
+				<button type="button" class="btn btn-primary" onclick="selectFilm()">Chọn</button>
 			</form>
-		</div>
+		</div> --}}
 
 		<div class="col-md-12 result-form text-center">
 			<div class="lds-ripple mt-5 result-loading" style="display: none">
@@ -98,17 +123,17 @@
 			let filmIds = [];
 			// Show form chọn phim
 			function showFormSelectFim(boxNumber) {
-				document.getElementById('movieSelectionForm').style.display = 'block';
-				document.getElementById('compareForm').setAttribute('data-box-number', boxNumber);
+				document.getElementById('movieSelectionForm' + boxNumber).style.display = 'block';
+				// document.getElementById('compareForm').setAttribute('data-box-number', boxNumber);
 			}
 
-			function selectFilm() {
-				let movieSelect = document.getElementById('movieSelect');
+			function selectFilm(boxNumber) {
+				let movieSelect = document.getElementById('movieSelect' + boxNumber);
 				let filmId = movieSelect.value;
 				let filmName = movieSelect.options[movieSelect.selectedIndex].text;
-				let boxNumber = document.getElementById('compareForm').getAttribute('data-box-number');
+				// let boxNumber = document.getElementById('compareForm').getAttribute('data-box-number');
 
-				document.getElementById('movieSelectionForm').style.display = 'none';
+				document.getElementById('movieSelectionForm' + boxNumber).style.display = 'none';
 
 				document.querySelector('.thFilm' + boxNumber).innerHTML = `${filmName}`;
 				filmIds[boxNumber - 1] = filmId;
@@ -125,8 +150,9 @@
 						$('.load' + boxNumber).hide()
 
 						$('.img_wrapper' + boxNumber).append(`<img class="w-50" loading="lazy" src="${data.img}" alt="${data.name}">`)
+
 						// SET tên
-						$('#filmName' + boxNumber).append(`<a href="/${data.url}" target="_blank">${data.name}</a>`)
+						$('#filmName' + boxNumber).append(`<a href="/${data.url}" class="mb-3 d-inline-block" target="_blank">${data.name}</a>`)
 
 						$('.box-button' + boxNumber).hide() // Ẩn button chọn phim
 						$('.delete-button' + boxNumber).show() //Hiện button xóa phim
@@ -138,10 +164,10 @@
 			function deleteFilm(boxNumber) {
 				document.getElementById('filmName' + boxNumber).innerHTML = '';
 				filmIds[boxNumber - 1] = undefined;
-				document.getElementById('movieSelectionForm').style.display = 'block';
+				document.getElementById('movieSelectionForm' + boxNumber).style.display = 'block';
 				$('.box-button' + boxNumber).show();
 				$('.img_wrapper' + boxNumber).html("");
-				document.getElementById('movieSelectionForm').style.display = 'none';
+				document.getElementById('movieSelectionForm' + boxNumber).style.display = 'none';
 				$('.sosanhbtn').show()
 				$('.table').hide()
 				$('#chart').hide()
@@ -151,7 +177,7 @@
 				$('.result-form table tbody').html('');
 				document.getElementById('chart').style.display = 'block';
 
-				if (filmIds.length === 2) {
+				if (filmIds.length == 2) {
 					$.ajax({
 						type: "POST",
 						url: "{{ route('phim.sosanhAjax') }}",

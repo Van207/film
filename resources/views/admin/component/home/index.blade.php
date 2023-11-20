@@ -27,7 +27,6 @@
 			<div class="card card-body">
 				<div class="d-flex align-items-center">
 					<i class="ph-users ph-2x text-indigo me-3"></i>
-
 					<div class="flex-fill text-end">
 						<h4 class="mb-0">{{ $user_count }}</h4>
 						<a href="{{ route('user.index') }}" class="text-indigo" title="Quản lý tài khoản">Tổng người dùng</a>
@@ -39,28 +38,16 @@
 		<div class="col-sm-6 col-xl-3">
 			<div class="card card-body">
 				<div class="d-flex align-items-center">
-					<div class="flex-fill">
-						<h4 class="mb-0">54,390</h4>
-						<span class="text-muted">total comments</span>
+					<i class="ph-newspaper ph-2x text-pink me-3"></i>
+					<div class="flex-fill text-end">
+						<h4 class="mb-0">{{ $post_count }}</h4>
+						<a href="{{ route('post.index') }}" class="text-pink" title="Quản lý bài viết">Bài viết</a>
 					</div>
-
-					<i class="ph-chats ph-2x text-primary ms-3"></i>
 				</div>
 			</div>
 		</div>
 
-		<div class="col-sm-6 col-xl-3">
-			<div class="card card-body">
-				<div class="d-flex align-items-center">
-					<div class="flex-fill">
-						<h4 class="mb-0">389,438</h4>
-						<span class="text-muted">total orders</span>
-					</div>
-
-					<i class="ph-package ph-2x text-danger ms-3"></i>
-				</div>
-			</div>
-		</div>
+	
 	</div>
 
 </div>

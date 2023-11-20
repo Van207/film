@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class PostPageController extends Controller
 {
+	public function allPost()
+	{
+		$title = "Tất cả bài viết";
+		$posts = Post::where('status', 'Public')->get();
+		return view('home.component.post.allpost', compact('title', 'posts'));
+	}
 	public function category($cate_slug)
 	{
 		$isCategory = Category::where('slug', $cate_slug)->exists();
@@ -17,8 +23,7 @@ class PostPageController extends Controller
 			$posts = $cate->post;
 			$title = $cate->name;
 			return view('home.component.post.category', compact('title', 'cate', 'posts'));
-		}
-		else {
+		} else {
 			abort(404);
 		}
 	}

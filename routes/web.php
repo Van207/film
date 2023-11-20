@@ -89,5 +89,6 @@ Route::prefix('so-sanh')->group(function () {
 	Route::post('/', [SoSanhController::class, 'sosanh'])->name('phim.sosanhAjax');
 	Route::GET('/getImg', [SoSanhController::class, 'getImgAjax'])->name('phim.getImgAjax');
 });
-Route::get('/{cate_slug}', [PostPageController::class, 'category'])->name('home.category');
+Route::get('/danh-muc/{cate_slug}', [PostPageController::class, 'category'])->name('home.category');
+Route::get('/post', [PostPageController::class, 'allPost'])->name('home.allPost');
 Route::get('/post/{post_slug}', [PostPageController::class, 'post'])->name('home.post');

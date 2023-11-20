@@ -61,6 +61,12 @@
 
 					</ul>
 				</li>
+				<li class="nav-item ">
+					<a href="#" class="nav-link">
+						<i class="ph-circles-three-plus"></i>
+						<span>Thu thập dữ liệu</span>
+					</a>
+				</li>
 				@if (Auth::check() && Auth::user()->role == '0')
 					<li class="nav-item ">
 						<a href="{{ route('user.index') }}" class="nav-link @if (Request::is('admin/user*') || Request::is('admin/users*')) active @endif">
@@ -69,17 +75,6 @@
 						</a>
 					</li>
 				@endif
-
-				<li class="nav-item ">
-					<a href="#" class="nav-link">
-						<i class="ph-circles-three-plus"></i>
-						<span>Thu thập dữ liệu</span>
-					</a>
-				</li>
-
-
-
-
 				{{-- <li class="nav-item">
 					<a href="{{ route('user.index') }}" class="nav-link @if (Request::is('user*')) active @endif">
 						<i class="ph-user"></i>

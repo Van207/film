@@ -101,7 +101,7 @@
 							@endphp
 							@foreach ($categories as $cate)
 								<li class="scroll-to-section">
-									<a href="{{ route('home.category', $cate->slug) }}" class="">{{ $cate->name }}</a>
+									<a href="{{ route('home.category', $cate->slug) }}" class="{{ Request::is("danh-muc/$cate->slug") ? 'active' : '' }}">{{ $cate->name }}</a>
 								</li>
 							@endforeach
 							<li class="scroll-to-section">

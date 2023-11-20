@@ -82,14 +82,21 @@ class HomeController extends Controller
 		$year = $request->input('year');
 		$genre = $request->input('genre');
 
+		$film_name = array();
+		$film_data = array();
 		$film = DB::table('films');
 
 		if ($name !== null && $name != "") {
 			$film->where('name', 'LIKE', "%{$name}%")->orWhere('name_vi', 'LIKE', "%{$name}%");
 		}
-
 		if ($year && $year != '0') {
 			$film->where('year', $year);
+
+			$top_year =  Film::where('year', $year)->orderBy('worldwide', 'desc')->limit(10)->get();
+			foreach ($top_year as $top) {
+				$film_name[] = $top->name_vi;
+				$film_data[] = $top->worldwide;
+			}
 		}
 
 		if ($genre && $genre != "0") {
@@ -100,6 +107,6 @@ class HomeController extends Controller
 
 		$films = $film->simplePaginate(16)->appends(['name' => $name, 'year' => $year, 'genre' => $genre]);
 		$title = "Danh sách phim";
-		return view('home.component.phim.all', compact('title', 'films'));
+		return view('home.component.phim.all', compact('title', 'films', 'film_name', 'film_data'));
 	}
 }

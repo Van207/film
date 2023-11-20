@@ -89,7 +89,7 @@
 								<a href="{{ route('home.index') }}" class="{{ request()->routeIs('home.index') ? 'active' : '' }}">Home</a>
 							</li>
 							<li class="scroll-to-section">
-								<a href="{{ route('phim.index') }}" class="{{ request()->routeIs('phim.index') ? 'active' : '' }}">Tất cả phim</a>
+								<a href="{{ route('phim.index') }}" class="{{ request()->routeIs('phim.index') || request()->routeIs('phim.filter') ? 'active' : '' }}">Tất cả phim</a>
 							</li>
 							<li class="scroll-to-section">
 								<a href="{{ route('phim.sosanh') }}" class="{{ request()->routeIs('phim.sosanh') ? 'active' : '' }}">So sánh phim</a>

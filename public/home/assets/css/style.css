@@ -188,6 +188,8 @@ h5,
 h6 {
 	margin-top: 0px;
 	margin-bottom: 0px;
+	padding: 15px 0;
+	font-size: 20px;
 }
 
 ul {
@@ -2471,4 +2473,15 @@ responsive
 		height: 72px;
 		opacity: 0;
 	}
+}
+
+/* POST CONTENT */
+
+
+.post-content {
+	text-align: justify;
+}
+
+.post-content img {
+	max-width: 100% !important;
 }

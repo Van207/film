@@ -6,7 +6,7 @@
 			@if ($posts && count($posts) > 0)
 				@foreach ($posts as $post)
 					@if ($post->status == 'Draft')
-						<p class="text-danger">Chưa có bài viết</p>
+						<div class="alert alert-warning text-danger text-center">Chưa có bài viết</div>
 					@else
 						{{-- Hiển thị bài viết tại đây --}}
 						<div class="col-lg-3 col-md-4 col-6">
@@ -31,7 +31,7 @@
 					@endif
 				@endforeach
 			@else
-				<p class="text-danger">Chưa có bài viết</p>
+				<div class="alert alert-warning text-danger text-center">Chưa có bài viết</div>
 			@endif
 		</div>
 

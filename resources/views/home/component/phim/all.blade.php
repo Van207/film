@@ -3,14 +3,14 @@
 <div class="section">
 	<div class="container">
 		<div class="row" style="padding-top: 130px">
+
 			<div class="col-md-12">
 				<div class="card my-2">
-					<div class="card-header m-0">
-						<div class="card-title m-0">
+					<div class="card-header m-0 bg-white">
+						<div class="card-title m-0 text-center">
 							<h4 class="m-0">Lọc & Tìm kiếm</h4>
 						</div>
 					</div>
-
 					<div class="card-body">
 						<form action="{{ route('phim.filter') }}" method="GET">
 							<div class="row align-items-end">
@@ -58,6 +58,19 @@
 				</div>
 			</div>
 		</div>
+
+
+
+		{{-- Hiển thị biểu đồ khi chọn year --}}
+		@if (request('year') && request('year') != '')
+			@if (count($film_name) && count($film_data) > 0)
+				<div class="col-md-12 col-12">
+					<h2 class="fw-bold">Các phim có doanh thu lớn nhất {{ request('year') }}</h2>
+
+					<div id="chart" style="width: 100%;height:400px;"></div>
+				</div>
+			@endif
+		@endif
 
 		<div class="row">
 			<div class="col-md-12">
@@ -127,4 +140,35 @@
 		font-size: 16px;
 	}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js" integrity="sha512-EmNxF3E6bM0Xg1zvmkeYD3HDBeGxtsG92IxFt1myNZhXdCav9MzvuH/zNMBU1DmIPN6njrhX1VTbqdJxQ2wHDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+	var chartDom = document.getElementById('chart');
+	var myChart = echarts.init(chartDom);
+	var option;
+
+	option = {
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
+			}
+		},
+		xAxis: {
+			type: 'category',
+			data: {!! json_encode($film_name) !!}
+		},
+		yAxis: {
+			type: 'value'
+		},
+		series: [{
+			name: 'Doanh thu',
+			data: {!! json_encode($film_data) !!},
+			type: 'bar'
+		}]
+	};
+
+	option && myChart.setOption(option);
+</script>
 @include('home.layout.footer')

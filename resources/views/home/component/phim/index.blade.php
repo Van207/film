@@ -63,15 +63,10 @@
 									@endphp
 								@endif
 
-								@php
-									$allGross = 0;
-									foreach ($gross as $g) {
-									    $allGross = $allGross + intval($g);
-									}
-								@endphp
+							
 
 								<p><span class="fw-bold">Doanh thu quốc tế:</span> <span class="text-primary"> ${{ number_format($allGross, 0, '.', ',') }}</span></p>
-								<p><span class="fw-bold">Tổng doanh thu:</span> <span class="text-primary"> ${{ number_format($phim->domestic + $allGross, 0, '.', ',') }}</span></p>
+								<p><span class="fw-bold">Tổng doanh thu:</span> <span class="text-primary"> ${{ number_format($phim->worldwide, 0, '.', ',') }}</span></p>
 
 								<div class="summary">
 									<p class="fw-bold">Tóm lược:</p>
@@ -106,7 +101,6 @@
 
 </div>
 
-{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js" integrity="sha512-EmNxF3E6bM0Xg1zvmkeYD3HDBeGxtsG92IxFt1myNZhXdCav9MzvuH/zNMBU1DmIPN6njrhX1VTbqdJxQ2wHDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
 	pieChartOpening()

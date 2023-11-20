@@ -14,7 +14,7 @@
 
 	<link rel="shortcut icon" href="{{ asset('images/favicon.jpg') }}" type="image/x-icon">
 
-	<title>{!! $title !!}</title>
+	<title>{!! isset($title) ? $title : 'Không có nội dung cần tìm' !!}</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="<?= asset('home/vendor/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
@@ -82,6 +82,7 @@
 							{{-- <img src="{{ asset('images/favicon.jpg') }}" alt="" width="10%" class="w-10"> --}}
 						</a>
 						<!-- ***** Logo End ***** -->
+
 						<!-- ***** Menu Start ***** -->
 						<ul class="nav">
 							<li class="scroll-to-section">
@@ -93,14 +94,18 @@
 							<li class="scroll-to-section">
 								<a href="{{ route('phim.sosanh') }}" class="{{ request()->routeIs('phim.sosanh') ? 'active' : '' }}">So sánh phim</a>
 							</li>
+							@php
+								$categories = DB::table('category')
+								    ->where('display_menu', '1')
+								    ->get();
+							@endphp
+							@foreach ($categories as $cate)
+								<li class="scroll-to-section">
+									<a href="{{ route('home.category', $cate->slug) }}" class="">{{ $cate->name }}</a>
+								</li>
+							@endforeach
 							<li class="scroll-to-section">
-								<a href="#">Review Phim</a>
-							</li>
-							<li class="scroll-to-section">
-								<a href="#">Chê Phim</a>
-							</li>
-							<li class="scroll-to-section">
-								<div class="border-first-button"><a href="#contact">Đăng ký</a></div>
+								{{-- <div class="border-first-button"><a href="#contact">Đăng ký</a></div> --}}
 							</li>
 						</ul>
 						<a class='menu-trigger'>
@@ -108,6 +113,7 @@
 						</a>
 						<!-- ***** Menu End ***** -->
 					</nav>
+
 				</div>
 			</div>
 		</div>

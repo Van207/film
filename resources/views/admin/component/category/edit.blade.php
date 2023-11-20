@@ -38,6 +38,21 @@
 							</div>
 						</div>
 
+						<div class="row mb-3">
+							<label class="col-form-label col-lg-3">Hiển thị trên menu</label>
+							<div class="border p-3 rounded col-lg-9">
+								<div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="display_menu" id="yes_display" {{ $cate->display_menu == 1 ? 'checked' : '' }} value="1">
+									<label class="form-check-label" for="yes_display">Có</label>
+								</div>
+
+								<div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="display_menu" id="no_display" value="0" {{ $cate->display_menu == 0 ? 'checked' : '' }}>
+									<label class="form-check-label" for="no_display">Không</label>
+								</div>
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-md-12 text-center">
 								<input type="submit" value="Cập nhật" class="btn btn-primary">

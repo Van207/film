@@ -120,7 +120,7 @@ class PostController extends Controller
 			[
 				'title' => 'required|max:255',
 				'content' => 'required',
-				'slug' => Rule::unique('category', 'slug')->ignore($id),
+				'slug' => Rule::unique('post', 'slug')->ignore($id),
 			],
 			[
 				'title.required' => "Tiêu đề không được để trống",

@@ -55,6 +55,7 @@ class CategoryController extends Controller
 		$cate->name = $request->name;
 		$cate->description = $request->description;
 		$cate->slug = Str::slug($request->name);
+		$cate->display_menu = $request->display_menu;
 		$cate->save();
 		return redirect()->route('category.index')->with('success', 'Đã thêm danh mục!');
 	}
@@ -95,7 +96,7 @@ class CategoryController extends Controller
 		$request->validate(
 			[
 				'name' => 'required|max:255',
-				'slug' => 'unique:category,slug',
+				'slug' => Rule::unique('category', 'slug')->ignore($id),
 			],
 			[
 				'name.required' => "Tiêu đề không được để trống",
@@ -107,6 +108,7 @@ class CategoryController extends Controller
 		$cate->name = $request->name;
 		$cate->description = $request->description;
 		$cate->slug = Str::slug($request->name);
+		$cate->display_menu = $request->display_menu;
 		$cate->save();
 		return redirect()->route('category.index')->with('success', 'Đã cập nhật danh mục!');
 	}

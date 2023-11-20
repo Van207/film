@@ -26,7 +26,7 @@
 							<tr>
 								<th>id</th>
 								<th>Tiêu đề</th>
-								<th>Nội dung</th>
+								{{-- <th>Nội dung</th> --}}
 								<th>Thumbnail</th>
 								<th>Danh mục</th>
 								<th>Tác giả</th>
@@ -40,9 +40,13 @@
 									<tr>
 										<td>{{ $post->id }}</td>
 										<td><a href="#">{{ $post->title }}</a></td>
-										<td>{!! $post->content !!}</td>
+										{{-- <td>{!! $post->content !!}</td> --}}
 										<td width="10%">
-											<img src="{{ asset('/images/post') . '/' . $post->thumbnail }}" alt="{!! $post->title !!}" class="w-100">
+											@if (isset($post->thumbnail) && $post->thumbnail != '')
+												<img src="{{ asset('images/post/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-100">
+											@else
+												<img src="{{ asset('images/post/post_blank.png') }}" alt="{{ $post->title }}" class="w-100">
+											@endif
 										</td>
 										<td>
 											{{ $post->category->name }}

@@ -46,6 +46,20 @@
 								<textarea rows="3" cols="3" class="form-control" name="description"></textarea>
 							</div>
 						</div>
+						<div class="row mb-3">
+							<label class="col-form-label col-lg-3">Hiển thị trên menu</label>
+							<div class="border p-3 rounded col-lg-9">
+								<div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="display_menu" id="yes_display" checked value="1">
+									<label class="form-check-label" for="yes_display">Có</label>
+								</div>
+
+								<div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="display_menu" id="no_display" value="0">
+									<label class="form-check-label" for="no_display">Không</label>
+								</div>
+							</div>
+						</div>
 
 						<div class="row">
 							<div class="col-md-12 text-center">
@@ -70,6 +84,7 @@
 								<th>id</th>
 								<th>Tên danh mục</th>
 								<th>Mô tả</th>
+								<th>Menu</th>
 								<th>Xóa</th>
 							</tr>
 						</thead>
@@ -80,6 +95,13 @@
 										<td>{{ $item->id }}</td>
 										<td><a href="{{ route('category.edit', $item->id) }}">{{ $item->name }}</a></td>
 										<td>{{ $item->description }}</td>
+										<td>
+											@if ($item->display_menu == 1)
+												<span class="badge bg-primary">Yes</span>
+											@else
+												<span class="badge bg-yellow text-black">No</span>
+											@endif
+										</td>
 										<td><a href="{{ route('category.delete', $item->id) }}" class="text-danger p-2"><i class="ph-trash"></i></a></td>
 									</tr>
 								@endforeach

@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\home\HomeController;
 use App\Http\Controllers\Home\SoSanhController;
+use App\Http\Controllers\Home\PostPageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -82,9 +83,10 @@ Route::prefix('phim')->group(function () {
 	Route::get('/', [HomeController::class, 'allFilm'])->name('phim.index');
 	Route::get('/filter', [HomeController::class, 'film_filter'])->name('phim.filter');
 });
-
 Route::prefix('so-sanh')->group(function () {
 	Route::get('/', [SoSanhController::class, 'index'])->name('phim.sosanh');
 	Route::post('/', [SoSanhController::class, 'sosanh'])->name('phim.sosanhAjax');
 	Route::GET('/getImg', [SoSanhController::class, 'getImgAjax'])->name('phim.getImgAjax');
 });
+Route::get('/{cate_slug}', [PostPageController::class, 'category'])->name('home.category');
+Route::get('/post/{post_slug}', [PostPageController::class, 'post'])->name('home.post');

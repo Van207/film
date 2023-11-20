@@ -11,10 +11,16 @@ class PostPageController extends Controller
 {
 	public function category($cate_slug)
 	{
-		$cate = Category::where('slug', $cate_slug)->first();
-		$posts = $cate->post;
-		$title = $cate->name;
-		return view('home.component.post.category', compact('title', 'cate', 'posts'));
+		$isCategory = Category::where('slug', $cate_slug)->exists();
+		if ($isCategory) {
+			$cate = Category::where('slug', $cate_slug)->first();
+			$posts = $cate->post;
+			$title = $cate->name;
+			return view('home.component.post.category', compact('title', 'cate', 'posts'));
+		}
+		else {
+			abort(404);
+		}
 	}
 
 	public function post($post_slug)

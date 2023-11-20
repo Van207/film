@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\FilmController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\home\HomeController;
 use App\Http\Controllers\Home\SoSanhController;
 use App\Http\Controllers\Home\PostPageController;

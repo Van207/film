@@ -63,9 +63,9 @@
 									@endphp
 								@endif
 
-							
 
-								<p><span class="fw-bold">Doanh thu quốc tế:</span> <span class="text-primary"> ${{ number_format($allGross, 0, '.', ',') }}</span></p>
+
+								<p><span class="fw-bold">Doanh thu quốc tế:</span> <span class="text-primary"> ${{ number_format($phim->international, 0, '.', ',') }}</span></p>
 								<p><span class="fw-bold">Tổng doanh thu:</span> <span class="text-primary"> ${{ number_format($phim->worldwide, 0, '.', ',') }}</span></p>
 
 								<div class="summary">

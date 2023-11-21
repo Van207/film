@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
 	public function index()
 	{
-		$title = 'Trang Web Phân Tích Doanh Thu Độc Đáo';
+		$title = 'Phân Tích Doanh Thu Phim | Nguyễn Thế Văn';
 		$year = date('Y');
 		$top10 = Film::where('year', $year)->orderBy('worldwide', 'desc')->limit(10)->get();
 

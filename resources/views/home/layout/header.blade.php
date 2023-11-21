@@ -29,6 +29,9 @@
 	{{-- SELECT 2 --}}
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<meta property="og:title" content="Phân Tích Doanh Thu Phim | Nguyễn Thế Văn">
+	<meta property="og:description" content="Dữ liệu thông minh, giao diện thân thiện - hãy bắt đầu hành trình ngay hôm nay">
+	<meta property="og:image" content="{{ asset('images/film_avatar.png') }}">
 	@stack('css')
 	@stack('scripts')
 </head>

@@ -8,8 +8,8 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\home\HomeController;
-use App\Http\Controllers\Home\SoSanhController;
-use App\Http\Controllers\Home\PostPageController;
+use App\Http\Controllers\home\SoSanhController;
+use App\Http\Controllers\home\PostPageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

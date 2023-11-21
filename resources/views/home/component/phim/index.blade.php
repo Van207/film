@@ -84,18 +84,45 @@
 
 			<div class="col-md-12 my-4">
 				<h3 class="text-center">Biểu đồ doanh thu thị trường quốc tế ngày mở bán của {{ $phim->name_vi }}</h3>
-				<div id="opening" class="p-3 my-5" style="width: 100%;height:500px;"></div>
+				<div id="opening" class="p-3 my-5" style="width: 100%;height:500px;min-width:100%;max-width:100%;"></div>
 			</div>
 
 			<div class="col-md-12 my-4">
 				<h3 class="text-center">Biểu đồ tổng doanh thu thị trường quốc tế của {{ $phim->name_vi }} </h3>
 
-				<div id="gross" class="p-3 my-5" style="width: 100%;height:500px;"></div>
+				<div id="gross" class="p-3 my-5" style="width: 100%;height:500px;min-width:100%;max-width:100%;"></div>
 			</div>
 		</div>
 
+
+		<h3 class="fw-bold">Các diễn viên tham gia</h3>
 		<div class="row">
-			<h3 class="fw-bold">Các diễn viên tham gia</h3>
+			@if (count($casts) > 0)
+				@foreach ($casts as $cast)
+					<div class="col-lg-3 col-md-4 col-12">
+						<div class="mb-2">
+							<div class="rounded">
+								<div class="list-group list-group-borderless py-2">
+									<div class="list-group-item d-flex align-items-center">
+										<p href="#" class="d-block me-3">
+											@if ($cast->avatar != '')
+												<img src="{{ $cast->avatar }}" class="rounded-circle" width="100%" alt="{{ $cast->name }}">
+											@else
+												<img src="{{ asset('images/user/cast-empty.png') }}" class="rounded-circle" style="max-width:140px !important" alt="{{ $cast->name }}">
+											@endif
+										</p>
+
+										<div class="flex-fill">
+											<div class="fw-bold">{{ $cast->name }}</div>
+											<p class="text-muted">{{ $cast->role }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				@endforeach
+			@endif
 		</div>
 	</div>
 
@@ -142,15 +169,17 @@
 				type: 'scroll',
 				orient: 'vertical',
 				right: 10,
-				top: 20,
-				bottom: 20,
-				data: data.legendData
+				top: 0,
+				// bottom: 20,
+				data: data.legendData,
+				// show: window.innerWidth > 1000
+				show: false
 			},
 			series: [{
 				name: 'Country',
 				type: 'pie',
-				radius: '70%',
-				center: ['40%', '50%'],
+				radius: '75%',
+				center: ['50%', '50%'],
 				data: data.seriesData,
 				emphasis: {
 					itemStyle: {
@@ -185,7 +214,9 @@
 		}
 
 		option && myChart.setOption(option);
-
+		window.addEventListener('resize', function() {
+			myChart.resize();
+		})
 	}
 
 	function pieChartGross() {
@@ -224,15 +255,17 @@
 				type: 'scroll',
 				orient: 'vertical',
 				right: 10,
-				top: 20,
+				top: 0,
 				bottom: 20,
-				data: data.legendData
+				data: data.legendData,
+				// show: window.innerWidth > 1000
+				show: false
 			},
 			series: [{
 				name: 'Country',
 				type: 'pie',
-				radius: '70%',
-				center: ['40%', '50%'],
+				radius: '75%',
+				center: ['50%', '50%'],
 				data: data.seriesData,
 				emphasis: {
 					itemStyle: {
@@ -267,7 +300,9 @@
 		}
 
 		option && myChart.setOption(option);
-
+		window.addEventListener('resize', function() {
+			myChart.resize();
+		})
 	}
 </script>
 @include('home.layout.footer')

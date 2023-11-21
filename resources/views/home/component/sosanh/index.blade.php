@@ -35,8 +35,8 @@
 							<form id="compareForm">
 								@csrf
 								<label for="movieSelect1">Chọn phim:</label>
-								<select class="js-example-matcher-start form-control" id="movieSelect1" name="movieSelect1" style="width: 70%"></select>
-								<button type="button" class="btn btn-primary" onclick="selectFilm(1)">Chọn</button>
+								<select class="js-example-matcher-start form-control" id="movieSelect1" name="movieSelect1" style="width: 100%"></select>
+								<button type="button" class="btn btn-primary my-3" onclick="selectFilm(1)">Chọn</button>
 							</form>
 						</div>
 
@@ -74,8 +74,8 @@
 							<form id="compareForm">
 								@csrf
 								<label for="movieSelect1">Chọn phim:</label>
-								<select class="js-example-matcher-start form-control" id="movieSelect2" name="movieSelect2" style="width: 70%"></select>
-								<button type="button" class="btn btn-primary" onclick="selectFilm(2)">Chọn</button>
+								<select class="js-example-matcher-start form-control" id="movieSelect2" name="movieSelect2" style="width: 100%"></select>
+								<button type="button" class="btn btn-primary my-3" onclick="selectFilm(2)">Chọn</button>
 							</form>
 						</div>
 
@@ -86,17 +86,6 @@
 		<div class="col-md-12 text-center my-3">
 			<button type="button" class="btn btn-success sosanhbtn" onclick="soSanhPhim()">So sánh</button>
 		</div>
-
-		<!-- Form chọn phim (ẩn ban đầu) -->
-		{{-- <div id="movieSelectionForm" style="display: none;" class="mt-4">
-			<form id="compareForm">
-				@csrf
-				<label for="movieSelect">Chọn phim:</label>
-				<select class="js-example-matcher-start form-control" id="movieSelect" name="movieSelect" style="width: 70%">
-				</select>
-				<button type="button" class="btn btn-primary" onclick="selectFilm()">Chọn</button>
-			</form>
-		</div> --}}
 
 		<div class="col-md-12 result-form text-center">
 			<div class="lds-ripple mt-5 result-loading" style="display: none">
@@ -114,7 +103,8 @@
 				<tbody></tbody>
 			</table>
 
-			<div id="chart" style="width: 100%;height:500px; display:none"></div>
+
+			<div id="chart" style="width: 100%;height:500px; display:none; min-width: 100%"></div>
 		</div>
 
 
@@ -259,7 +249,7 @@
 
 				option = {
 					title: {
-						text: 'Doanh thu theo quốc gia'
+						text: 'Biểu đồ tổng doanh thu'
 					},
 					tooltip: {
 						trigger: 'axis'
@@ -302,6 +292,9 @@
 				};
 
 				option && myChart.setOption(option);
+				window.addEventListener('resize', function() {
+					myChart.resize();
+				})
 
 			}
 

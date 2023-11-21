@@ -171,6 +171,9 @@
 			};
 
 			option && myChart.setOption(option);
+			window.addEventListener('resize', function() {
+				myChart.resize();
+			})
 		</script>
 	@endif
 @endif

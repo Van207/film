@@ -81,8 +81,8 @@
 				<div class="col-12">
 					<nav class="main-nav">
 						<!-- ***** Logo Start ***** -->
-						<a href="index.html" class="logo">
-							{{-- <img src="{{ asset('images/favicon.jpg') }}" alt="" width="10%" class="w-10"> --}}
+						<a href="{{ route('home.index') }}" class="logo">
+							<img src="{{ asset('images/favicon.jpg') }}" alt="Phân Tích Doanh Thu Phim">
 						</a>
 						<!-- ***** Logo End ***** -->
 

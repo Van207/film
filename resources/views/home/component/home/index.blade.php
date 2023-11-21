@@ -37,7 +37,7 @@
 	</div>
 </div>
 
-<div id="portfolio" class="our-portfolio section">
+<div id="portfolio" class="our-portfolio section" style="padding: 0 !important">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-5">
@@ -73,7 +73,7 @@
 	</div>
 </div>
 
-<div id="portfolio" class="our-portfolio section">
+<div id="portfolio" class="our-portfolio section" style="padding: 0 !important">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-5">

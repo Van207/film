@@ -109,11 +109,14 @@ class HomeController extends Controller
 		if ($genre && $genre != "0") {
 			$film->join('film_detail', 'films.id', '=', 'film_detail.film_id')
 				->where('film_detail.title', '=', 'genres')
-				->where('film_detail.details', 'like', "%{$genre}%");
+				->where('film_detail.details', 'like', "%{$genre}%")
+				->select('films.*','film_detail.id as detail_id', 'film_detail.title', 'film_detail.details');
 		}
+
 
 		$films = $film->simplePaginate(16)->appends(['name' => $name, 'year' => $year, 'genre' => $genre]);
 		$title = "Danh sách phim";
+		// dd($films);
 		return view('home.component.phim.all', compact('title', 'films', 'film_name', 'film_data'));
 	}
 }

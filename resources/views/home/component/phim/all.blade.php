@@ -21,8 +21,8 @@
 								</div>
 
 								<div class="col-md-3 col-lg-3">
-									<label for="name" class="col-form-label">Năm phát hành</label>
-									<select class="form-select select filter" name="year">
+									<label for="year" class="col-form-label">Năm phát hành</label>
+									<select class="form-select select filter" name="year" id="year">
 										<option value="0" {{ request('year') == 0 ? 'selected' : '' }}>Tất cả năm</option>
 										@php
 											$list_year = DB::table('films')
@@ -36,8 +36,8 @@
 								</div>
 
 								<div class="col-md-3 col-lg-3">
-									<label for="name" class="col-form-label">Thể loại</label>
-									<select class="form-select select filter" name="genre">
+									<label for="genre" class="col-form-label">Thể loại</label>
+									<select class="form-select select filter" name="genre" id="genre">
 										<option value="0" {{ request('genre') == '' ? 'selected' : '' }}>Tất cả thể loại</option>
 										<option value="Action" {{ request('genre') == 'Action' ? 'selected' : '' }}>Hành động</option>
 										<option value="Romance" {{ request('genre') == 'Romance' ? 'selected' : '' }}>Lãng mạng</option>
@@ -92,7 +92,7 @@
 								@foreach ($films as $film)
 									<div class="col-md-4 col-lg-3 col-6 my-2">
 										<div class="card">
-											<a href="{{ route('home.phim', [Str::slug($film->name), $film->id]) }}" target="_blank" title="{{ $film->name_vi }}" class="text-center">
+											<a href="{{ route('home.phim', [Str::slug($film->name), $film->id]) }}" title="{{ $film->name_vi }}" class="text-center">
 												<img class="card-img-top img-thumbnail" src="{{ $film->img_big }}" alt="{{ $film->name_vi }}" loading="lazy">
 											</a>
 

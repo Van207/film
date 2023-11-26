@@ -97,6 +97,10 @@
 							<li class="scroll-to-section">
 								<a href="{{ route('phim.sosanh') }}" class="{{ request()->routeIs('phim.sosanh') ? 'active' : '' }}">So sánh phim</a>
 							</li>
+
+							<li class="scroll-to-section">
+								<a href="{{ route('home.allPost') }}" class="{{ request()->routeIs('home.allPost') ? 'active' : '' }}">Bài viết</a>
+							</li>
 							@php
 								$categories = DB::table('category')
 								    ->where('display_menu', '1')

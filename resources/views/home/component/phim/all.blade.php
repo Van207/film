@@ -8,7 +8,7 @@
 				<div class="card my-2">
 					<div class="card-header m-0 bg-white">
 						<div class="card-title m-0 text-center">
-							<h4 class="m-0">Lọc & Tìm kiếm</h4>
+							<h3 class="m-0 fw-bold h3">Lọc & Tìm kiếm</h3>
 						</div>
 					</div>
 					<div class="card-body">

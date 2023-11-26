@@ -61,10 +61,17 @@
 
 					</ul>
 				</li>
-				<li class="nav-item ">
-					<a href="#" class="nav-link">
+				<li class="nav-item">
+					<a href="{{ route('crawl.index') }}" class="nav-link @if (Request::is('admin/quan-ly-thu-thap*')) active @endif">
 						<i class="ph-circles-three-plus"></i>
 						<span>Thu thập dữ liệu</span>
+					</a>
+
+				</li>
+				<li class="nav-item ">
+					<a href="{{ route('crawl.storage') }}" class="nav-link @if (Request::is('admin/du-lieu-thu-thap*')) active @endif">
+						<i class="ph-database"></i>
+						<span>Dữ liệu thu thập</span>
 					</a>
 				</li>
 				@if (Auth::check() && Auth::user()->role == '0')

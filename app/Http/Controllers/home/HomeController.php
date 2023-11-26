@@ -52,7 +52,10 @@ class HomeController extends Controller
 			->where('opening', '!=', '0')
 			->where('country', '!=', 'Domestic')
 			->pluck('opening')->toArray();
-
+		$opening_table = FilmRevenue::where('film_id', $id)
+			->where('opening', '!=', '0')
+			->where('country', '!=', 'Domestic')
+			->get();
 
 		$lable_name_gross = "Tổng doanh thu";
 		$labels_gross = FilmRevenue::where('film_id', $id)
@@ -63,9 +66,13 @@ class HomeController extends Controller
 			->where('gross', '!=', '0')
 			->where('country', '!=', 'Domestic')
 			->pluck('gross')->toArray();
+		$gross_table = FilmRevenue::where('film_id', $id)
+			->where('gross', '!=', '0')
+			->where('country', '!=', 'Domestic')
+			->get();
 		return view(
 			'home.component.phim.index',
-			compact('title', 'phim', 'details', 'casts', 'lable_name_opening', 'labels_opening', 'opening', 'lable_name_gross', 'labels_gross', 'gross')
+			compact('title', 'phim', 'details', 'casts', 'lable_name_opening', 'labels_opening', 'opening', 'opening_table', 'lable_name_gross', 'labels_gross', 'gross', 'gross_table')
 		);
 	}
 

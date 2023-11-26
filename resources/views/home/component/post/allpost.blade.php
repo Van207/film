@@ -1,7 +1,7 @@
 @include('home.layout.header')
 <div id="portfolio" class="section" style="padding-top:130px; min-height: 500px">
 	<div class="container">
-		<h1 class="mb-4 fw-bold">Tất cả bài viết</h1>
+		<h1 class="mb-4 fw-bold h3 text-center">Tất cả bài viết</h1>
 		<div class="row">
 			@if ($posts && count($posts) > 0)
 				@foreach ($posts as $post)
@@ -22,7 +22,9 @@
 									</div>
 								</a>
 								<div class="card-body">
-									<h2 class="card-title cate-name text-center">
+									<span class="text-muted" style="font-size: 13px"><i>{!! $post->category->name !!}</i></span>
+									<h2 class="card-title cate-name text-center pt-2">
+
 										<a href="{{ route('home.post', $post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
 									</h2>
 								</div>

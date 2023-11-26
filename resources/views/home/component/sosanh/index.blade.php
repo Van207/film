@@ -1,15 +1,15 @@
 @include('home.layout.header')
 <div id="portfolio" class="section" style="padding-top:130px; min-height: 550px">
 	<div class="container">
-		<h1 class="mb-4">So sánh phim</h1>
+		<h3 class="mb-4 fw-bold h3 text-center">So sánh phim</h3>
 
 		<div class="row">
 			<div class="col-md-6 w-50">
 				<div class="card">
 					<div class="card-body text-center">
 
-						<h5 class="card-title">Lựa chọn phim</h5>
-						<h3 id="filmName1"></h3>
+						<h5 class="card-title mb-0">Lựa chọn phim</h5>
+						<h3 id="filmName1" class="h3 p-0 mb-0"></h3>
 						<div class="box-button1" onclick="showFormSelectFim(1)">+</div>
 
 						<div class="box-image img_wrapper1"></div>
@@ -47,8 +47,8 @@
 			<div class="col-md-6 w-50">
 				<div class="card">
 					<div class="card-body text-center">
-						<h5 class="card-title">Lựa chọn phim</h5>
-						<h3 id="filmName2"></h3>
+						<h5 class="card-title mb-0">Lựa chọn phim</h5>
+						<h3 id="filmName2" class="h3 p-0 mb-0"></h3>
 						<div class="box-button2" onclick="showFormSelectFim(2)">+</div>
 
 						<div class="box-image img_wrapper2"></div>
@@ -93,6 +93,8 @@
 				<div></div>
 			</div>
 			<table class="table table-hover table-bordered text-center" style="display: none">
+				<h3 class="fw-bold text-center mt-3 h3 chart-title" style="display: none">Bảng so sánh thông tin phim</h3>
+
 				<thead>
 					<tr>
 						<th>So sánh</th>
@@ -104,6 +106,7 @@
 			</table>
 
 
+			<h3 class="fw-bold text-center mt-4 h3 chart-title" style="display: none">Biểu đồ so sánh doanh thu phim</h3>
 			<div id="chart" style="width: 100%;height:500px; display:none; min-width: 100%"></div>
 		</div>
 
@@ -139,10 +142,10 @@
 					success: function(data) {
 						$('.load' + boxNumber).hide()
 
-						$('.img_wrapper' + boxNumber).append(`<img class="w-50" loading="lazy" src="${data.img}" alt="${data.name}">`)
+						$('.img_wrapper' + boxNumber).append(`<img loading="lazy" src="${data.img}" alt="${data.name}">`)
 
 						// SET tên
-						$('#filmName' + boxNumber).append(`<a href="/${data.url}" class="mb-3 d-inline-block" target="_blank">${data.name}</a>`)
+						$('#filmName' + boxNumber).append(`<a href="/${data.url}" target="_blank">${data.name}</a>`)
 
 						$('.box-button' + boxNumber).hide() // Ẩn button chọn phim
 						$('.delete-button' + boxNumber).show() //Hiện button xóa phim
@@ -161,6 +164,7 @@
 				$('.sosanhbtn').show()
 				$('.table').hide()
 				$('#chart').hide()
+				$('.chart-title').hide()
 			}
 
 			function soSanhPhim() {
@@ -185,8 +189,8 @@
 							$('.table').show()
 							$('#chart').show()
 							$('.result-form table').show();
-							$('.sosanhbtn').hide()
-
+							$('.sosanhbtn').hide();
+							$('.chart-title').show()
 							let film1 = data.data.film1;
 							let film2 = data.data.film2;
 
@@ -196,26 +200,38 @@
 							let revenue1 = data.data.film1.film_revenue;
 							let revenue2 = data.data.film2.film_revenue;
 
+
+							(film1.budget != "") ? loinhuan1 = (parseFloat(film1.worldwide) - parseFloat(film1.budget)) / parseFloat(film1.worldwide) * 100: loinhuan1 = 0;
+							(film2.budget != "") ? loinhuan2 = (parseFloat(film2.worldwide) - parseFloat(film2.budget)) / parseFloat(film2.worldwide) * 100: loinhuan2 = 0;
+
 							$('.result-form table tbody').append(`
 								<tr>
 									<td>Năm phát hành</td>
-									<td>${film1.year}</td>
-									<td>${film2.year}</td>
+									<td class="${(loinhuan1 >= loinhuan2) ? 'text-success fw-bold' : ''}">${film1.year}</td>
+									<td class="${(loinhuan2 >= loinhuan1) ? 'text-success fw-bold' : ''}">${film2.year}</td>
 								</tr>
 								<tr>
 									<td>Chi phí (Dự kiến)</td>
-									<td>${(film1.budget != "") ? parseFloat(film1.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}</td>
-									<td>${(film2.budget != "") ? parseFloat(film2.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}</td>
+									<td class="${(loinhuan1 >= loinhuan2) ? 'text-success fw-bold' : ''}">
+										${(film1.budget != "") ? parseFloat(film1.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}
+									</td>
+									<td class="${(loinhuan2 >= loinhuan1) ? 'text-success fw-bold' : ''}">
+										${(film2.budget != "") ? parseFloat(film2.budget).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '-'}
+									</td>
 								</tr>
 								<tr>
 									<td>Doanh thu toàn thế giới</td>
-									<td>${parseFloat(film1.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
-									<td>${parseFloat(film2.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+									<td class="${(loinhuan1 >= loinhuan2) ? 'text-success fw-bold' : ''}">
+										${parseFloat(film1.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+									</td>
+									<td class="${(loinhuan2 >= loinhuan1) ? 'text-success fw-bold' : ''}">
+										${parseFloat(film2.worldwide).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+									</td>
 								</tr>
 								<tr>
 									<td>Lợi nhuận</td>
-									<td>${(film1.budget != "") ? (((parseFloat(film1.worldwide) - parseFloat(film1.budget)) / parseFloat(film1.worldwide)) * 100).toFixed(2) + '%' : '-'}</td>
-									<td>${(film2.budget != "") ? (((parseFloat(film2.worldwide) - parseFloat(film2.budget)) / parseFloat(film2.worldwide)) * 100).toFixed(2) + '%' : '-'}</td>
+									<td class="${(loinhuan1 >= loinhuan2) ? 'text-success fw-bold' : ''}">${loinhuan1.toFixed(2) + '%'}</td>
+									<td class="${(loinhuan2 >= loinhuan1) ? 'text-success fw-bold' : ''}">${loinhuan2.toFixed(2) + '%'}</td>
 								</tr>`)
 
 							const r1 = revenue1.filter(item1 => {
@@ -249,7 +265,7 @@
 
 				option = {
 					title: {
-						text: 'Biểu đồ tổng doanh thu'
+						text: ''
 					},
 					tooltip: {
 						trigger: 'axis'

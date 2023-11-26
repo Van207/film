@@ -1,7 +1,7 @@
 @include('home.layout.header')
 <div id="portfolio" class="section" style="padding-top:130px; min-height: 500px">
 	<div class="container">
-		<h1 class="mb-4 fw-bold">{{ $cate->name }}</h1>
+		<h1 class="mb-5 fw-bold h3 text-center">Bài viết trong {{ $cate->name }}</h1>
 		<div class="row">
 			@if ($posts && count($posts) > 0)
 				@foreach ($posts as $post)

@@ -26,7 +26,6 @@
 							<tr>
 								<th>id</th>
 								<th>Tiêu đề</th>
-								{{-- <th>Nội dung</th> --}}
 								<th>Thumbnail</th>
 								<th>Danh mục</th>
 								<th>Tác giả</th>
@@ -39,8 +38,9 @@
 								@foreach ($posts as $post)
 									<tr>
 										<td>{{ $post->id }}</td>
-										<td><a href="#">{{ $post->title }}</a></td>
-										{{-- <td>{!! $post->content !!}</td> --}}
+										<td width="300px">
+											<a href="{{ route('home.post', $post->slug) }}" title="{{ $post->title }}" target="_blank" class="post-title">{{ $post->title }}</a>
+										</td>
 										<td width="10%">
 											@if (isset($post->thumbnail) && $post->thumbnail != '')
 												<img src="{{ asset('images/post/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-100">
@@ -84,4 +84,13 @@
 	</div>
 
 </div>
+<style>
+	.post-title {
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		display: -webkit-box;
+		height: 48px;
+	}
+</style>
 @include('admin.layout.footer')

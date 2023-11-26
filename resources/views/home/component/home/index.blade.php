@@ -18,7 +18,7 @@
 				<div class="loop owl-carousel">
 					@foreach ($top10 as $top)
 						<div class="item">
-							<a href="{{ route('home.phim', [Str::slug($top->name), $top->id]) }}">
+							<a href="{{ route('home.phim', [Str::slug($top->name), $top->id]) }}" title="{{ $top->name_vi }}">
 								<div class="portfolio-item">
 									<div class="thumb">
 										<img src="{!! $top->img_big !!}" alt="{!! $top->name_vi !!}" loading="lazy">
@@ -54,7 +54,7 @@
 				<div class="loop owl-carousel">
 					@foreach ($top_action as $action)
 						<div class="item">
-							<a href="{{ route('home.phim', [Str::slug($action->name), $action->id]) }}">
+							<a href="{{ route('home.phim', [Str::slug($action->name), $action->film_id]) }}" title="{{ $action->name_vi }}">
 								<div class="portfolio-item">
 									<div class="thumb">
 										<img src="{!! $action->img_big !!}" alt="{!! $action->name_vi !!}" loading="lazy">
@@ -91,7 +91,7 @@
 				<div class="loop owl-carousel">
 					@foreach ($top_animation as $animation)
 						<div class="item">
-							<a href="{{ route('home.phim', [Str::slug($animation->name), $animation->id]) }}">
+							<a href="{{ route('home.phim', [Str::slug($animation->name), $animation->film_id]) }}" title="{{ $animation->name_vi }}">
 								<div class="portfolio-item">
 									<div class="thumb">
 										<img src="{!! $animation->img_big !!}" alt="{!! $animation->name_vi !!}" loading="lazy">

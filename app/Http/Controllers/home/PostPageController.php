@@ -35,7 +35,12 @@ class PostPageController extends Controller
 			$cate = $post->category;
 			$title = $post->title;
 
-			return view('home.component.post.post', compact('title', 'cate', 'post'));
+			$related_posts = Post::where('category_id', $post->category_id)
+				->where('slug', '!=', $post_slug)
+				->where('status', 'Public')
+				->limit(4)
+				->get();
+			return view('home.component.post.post', compact('title', 'cate', 'post', 'related_posts'));
 		} else {
 			abort(404);
 		}

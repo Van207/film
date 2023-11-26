@@ -59,34 +59,43 @@
 					</div>
 				</div>
 
-				<div class="card-body">
-					<div class="row film_wrapper">
-						@if (count($films) > 0)
-							@foreach ($films as $film)
-								<div class="col-md-4 col-lg-3 col-6">
-									<div class="card">
-										<img class="card-img-top img-thumbnail" src="{{ $film->image }}" alt="{{ $film->name_vi }}">
-										<div class="card-body">
-											<h5 class="card-title m-auto">{{ $film->name_vi }} ({{ $film->year }})</h5>
-											{{-- <h6>{{ $film->name_vi }}</h6> --}}
-											<p class="card-text film-summary">{{ $film->summary }}</p>
-											<a href="{{ route('film.detail', $film->id) }}" class="btn btn-primary">Chi tiết</a>
-										</div>
-									</div>
-								</div>
-							@endforeach
-							<div class="pagination_wrapper text-center mt-3 mb-2">
-								{{ $films->links() }}
-
-							</div>
-						@else
-							<div class="col-md-12 col-12">
-								<div class="alert alert-danger text-center">Không có kết quả</div>
-							</div>
-						@endif
-
-					</div>
-
+				<div class="table-responsive">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>Tên phim</th>
+								<th>Hình ảnh</th>
+								<th>Tùy chọn</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (count($films) > 0)
+								@foreach ($films as $film)
+									<tr>
+										<td>{{ $film->id }}</td>
+										<td><a href="{{ route('film.detail', $film->id) }}" title="Xem chi tiết">{{ $film->name }}</a></td>
+										<td>
+											@if ($film->image != '')
+												<img src="{{ $film->image }}" alt="{{ $film->name }}">
+											@else
+											@endif
+										</td>
+										<td>
+											<a href="#" class="btn btn-danger">Xóaaaaa</a>
+										</td>
+									</tr>
+								@endforeach
+							@else
+								<tr>
+									<td colspan="6">
+										<div class="alert alert-danger">Chưa có dữ liệu</div>
+									</td>
+								</tr>
+							@endif
+						</tbody>
+					</table>
+					<div class="pagination_wrapper text-center mt-3 mb-2">{{ $films->links() }}</div>
 				</div>
 			</div>
 		</div>

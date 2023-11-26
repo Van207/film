@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\Admincontroller;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\FilmController;
 use App\Http\Controllers\admin\PostController;
+use App\Http\Controllers\admin\ThuThapController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
@@ -49,7 +50,6 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::get('/edit-revenue/{id}', [FilmController::class, 'editRevenue'])->name('film.editRevenue');
 	});
 
-
 	Route::prefix('/category')->group(function () {
 		Route::get('/', [CategoryController::class, 'index'])->name('category.index');
 		Route::post('/', [CategoryController::class, 'store']);
@@ -75,6 +75,18 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::post('/{id}', [UserController::class, 'update']);
 		Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 	});
+
+	Route::prefix('quan-ly-thu-thap')->group(function () {
+		Route::get('/', [ThuThapController::class, 'list'])->name('crawl.index');
+		Route::get('/edit/{id}', [ThuThapController::class, 'edit'])->name('crawl.edit');
+		Route::post('/edit/{id}', [ThuThapController::class, 'update']);
+		Route::get('/test1/{unique_name}', [ThuThapController::class, 'test_tien_trinh'])->name('test');
+	});
+
+	Route::prefix('du-lieu-thu-thap')->group(function () {
+		Route::get('/', [ThuThapController::class, 'storage'])->name('crawl.storage');
+		Route::get('/view/{id}', [ThuThapController::class, 'view'])->name('crawl.view');
+	});
 });
 
 
@@ -92,3 +104,10 @@ Route::prefix('so-sanh')->group(function () {
 Route::get('/danh-muc/{cate_slug}', [PostPageController::class, 'category'])->name('home.category');
 Route::get('/bai-viet', [PostPageController::class, 'allPost'])->name('home.allPost');
 Route::get('/bai-viet/{post_slug}', [PostPageController::class, 'post'])->name('home.post');
+
+
+Route::get('/crawl', [ThuThapController::class, 'index']);
+Route::get('/crawl2', [ThuThapController::class, 'crawl2_detail']);
+Route::get('/crawl3', [ThuThapController::class, 'crawl3_film_detail']);
+Route::get('/crawl4', [ThuThapController::class, 'crawl4_imdb']);
+Route::get('/crawl5', [ThuThapController::class, 'crawl5_img']);

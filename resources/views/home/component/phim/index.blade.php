@@ -8,7 +8,7 @@
 				<div class="card">
 					<div class="card-header text-center">
 
-						<h2>{{ $phim->name }}</h2>
+						<h2 class="fw-bold h3">{{ $phim->name }}</h2>
 						@if ($phim->name_vi != $phim->name)
 							<h5>{{ $phim->name_vi }}</h5>
 						@endif
@@ -52,7 +52,7 @@
 								@endforeach
 
 								@if ($phim->budget)
-									<p><span class="fw-bold">Chi phí:</span> <span class="text-primary"> ${{ number_format($phim->budget, 0, '.', ',') }}</span></p>
+									<p><span class="fw-bold">Chi phí:</span> <span class="text-primary"> ${{ number_format(floatval($phim->budget), 0, '.', ',') }}</span></p>
 								@endif
 
 								@if ($phim->domestic)
@@ -83,14 +83,88 @@
 			</div>
 
 			<div class="col-md-12 my-4">
-				<h3 class="text-center">Biểu đồ doanh thu thị trường quốc tế ngày mở bán của {{ $phim->name_vi }}</h3>
-				<div id="opening" class="p-3 my-5" style="width: 100%;height:500px;min-width:100%;max-width:100%;"></div>
+				<h3 class="text-center fw-bold h4">Doanh thu ngày công chiếu của {{ $phim->name_vi }}</h3>
+
+				<!-- Nav tabs -->
+				<ul class="nav nav-pills justify-content-center mb-4">
+					<li class="nav-item">
+						<a class="nav-link px-5 border me-2 active" data-bs-toggle="tab" href="#chart-opening">Chart</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link px-5 border me-2" data-bs-toggle="tab" href="#table-opening">Table</a>
+					</li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane container active" id="chart-opening">
+						<div id="opening" class="p-3 my-2" style="width: 100%;height:500px;min-width:100%;max-width:100%;"></div>
+					</div>
+
+					<div class="tab-pane container fade table-responsive" id="table-opening">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Quốc gia</th>
+									<th>Doanh thu</th>
+								</tr>
+
+							</thead>
+							<tbody>
+								@foreach ($opening_table as $o)
+									<tr>
+										<td>{{ $o->country }}</td>
+										<td>${!! number_format($o->opening, 0, '.', ',') !!}</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 
 			<div class="col-md-12 my-4">
-				<h3 class="text-center">Biểu đồ tổng doanh thu thị trường quốc tế của {{ $phim->name_vi }} </h3>
+				<h3 class="text-center fw-bold h4">Biểu đồ tổng doanh của {{ $phim->name_vi }} </h3>
 
-				<div id="gross" class="p-3 my-5" style="width: 100%;height:500px;min-width:100%;max-width:100%;"></div>
+
+
+
+				<!-- Nav tabs -->
+				<ul class="nav nav-pills justify-content-center mb-4">
+					<li class="nav-item">
+						<a class="nav-link px-5 active border me-2" data-bs-toggle="tab" href="#chart-gross">Chart</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link px-5 border me-2" data-bs-toggle="tab" href="#table-gross">Table</a>
+					</li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane container active" id="chart-gross">
+						<div id="gross" class="p-3 my-2" style="width: 100%;height:500px;min-width:100%;max-width:100%;"></div>
+					</div>
+
+					<div class="tab-pane container fade table-responsive" id="table-gross">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Quốc gia</th>
+									<th>Doanh thu</th>
+								</tr>
+
+							</thead>
+							<tbody>
+								@foreach ($gross_table as $g)
+									<tr>
+										<td>{{ $g->country }}</td>
+										<td>${!! number_format($g->gross, 0, '.', ',') !!}</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 

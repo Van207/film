@@ -19,9 +19,9 @@
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-lg-2 fw-semibold">Url</label>
+						<label class="col-form-label col-lg-2 fw-semibold">Năm</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" name="url" value="{{ $crawl->url }}">
+							<input type="text" class="form-control" name="year" value="{{ $crawl->year }}">
 						</div>
 					</div>
 					<div class="row mb-3">

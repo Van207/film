@@ -22,7 +22,7 @@ class PostController extends Controller
 	public function index()
 	{
 		$title = 'Danh sách bài viết';
-		$posts = Post::all();
+		$posts = Post::orderBy('id', 'desc')->simplePaginate(25);
 		return view('admin.component.post.index', compact('title', 'posts'));
 	}
 

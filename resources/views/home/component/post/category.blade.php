@@ -30,6 +30,9 @@
 						</div>
 					@endif
 				@endforeach
+				<div class="col-md-12 col-12 text-center mt-4">
+					{{ $posts->links() }}
+				</div>
 			@else
 				<div class="alert alert-warning text-danger text-center">Chưa có bài viết</div>
 			@endif

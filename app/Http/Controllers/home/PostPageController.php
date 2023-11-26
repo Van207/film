@@ -12,7 +12,7 @@ class PostPageController extends Controller
 	public function allPost()
 	{
 		$title = "Tất cả bài viết";
-		$posts = Post::where('status', 'Public')->get();
+		$posts = Post::where('status', 'Public')->orderBy('id', 'desc')->simplePaginate(16);
 		return view('home.component.post.allpost', compact('title', 'posts'));
 	}
 	public function category($cate_slug)
@@ -20,7 +20,7 @@ class PostPageController extends Controller
 		$isCategory = Category::where('slug', $cate_slug)->exists();
 		if ($isCategory) {
 			$cate = Category::where('slug', $cate_slug)->first();
-			$posts = $cate->post;
+			$posts = $cate->post()->orderBy('id', 'desc')->simplePaginate(16);
 			$title = $cate->name;
 			return view('home.component.post.category', compact('title', 'cate', 'posts'));
 		} else {

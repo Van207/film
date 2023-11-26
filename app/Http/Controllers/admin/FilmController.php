@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Film;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FilmController extends Controller
 {
@@ -92,7 +93,24 @@ class FilmController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		$phim = Film::find($id);
+
+		// Cập nhật trạng thái public kho lưu trữ pubic = 0
+		$name = $phim->name;
+		DB::table("film_store")->where('name', '=', $name)->update(['public' => '0']);
+
+		$phim->delete();
+
+		DB::table('film_cast')
+			->where('film_id', $id)
+			->delete();
+		DB::table('film_detail')
+			->where('film_id', $id)
+			->delete();
+		DB::table('film_revenue')
+			->where('film_id', $id)
+			->delete();
+		return redirect()->route('film.index')->with('msg', 'Đã xóa thành công');
 	}
 
 	public function filter(Request $request)

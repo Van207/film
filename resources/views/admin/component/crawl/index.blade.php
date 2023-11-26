@@ -3,13 +3,13 @@
 <div class="content">
 	@if (session('msg'))
 		<div class="alert alert-success">
-			{{ session('msg') }}
+			{!! session('msg') !!}
 		</div>
 	@endif
 
 	@if (session('err'))
 		<div class="alert alert-danger">
-			{{ session('err') }}
+			{!! session('err') !!}
 		</div>
 	@endif
 	<div class="mb-3">
@@ -32,7 +32,7 @@
 						<th>#</th>
 						<th>Tiến trình</th>
 						<th>Trạng thái</th>
-						<th>Url</th>
+						<th>Năm</th>
 						<th>Đặt lịch</th>
 						<th>Run now</th>
 						<th>Tùy chọn</th>
@@ -52,11 +52,11 @@
 									@endif
 
 								</td>
-								<td>{{ $c->url }}</td>
+								<td>{{ $c->year }}</td>
 
 								<td>{{ $c->schedule }}</td>
 								<td>
-									<a href="{{ route('test', $c->unique_name) }}">Click</a>
+									<a href="{{ route('run', $c->unique_name) }}">Click</a>
 								</td>
 								<td>
 									<a href="{{ route('crawl.edit', $c->id) }}" class="btn btn-primary btn-icon">
@@ -69,7 +69,6 @@
 							</tr>
 						@endforeach
 					@else
-						
 					@endif
 				</tbody>
 			</table>

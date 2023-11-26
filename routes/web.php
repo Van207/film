@@ -80,12 +80,13 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::get('/', [ThuThapController::class, 'list'])->name('crawl.index');
 		Route::get('/edit/{id}', [ThuThapController::class, 'edit'])->name('crawl.edit');
 		Route::post('/edit/{id}', [ThuThapController::class, 'update']);
-		Route::get('/test1/{unique_name}', [ThuThapController::class, 'test_tien_trinh'])->name('test');
 	});
 
 	Route::prefix('du-lieu-thu-thap')->group(function () {
 		Route::get('/', [ThuThapController::class, 'storage'])->name('crawl.storage');
 		Route::get('/view/{id}', [ThuThapController::class, 'view'])->name('crawl.view');
+		Route::get('/public/{id}', [ThuThapController::class, 'public_film'])->name('crawl.public');
+		Route::get('/filter', [ThuThapController::class, 'filter'])->name('crawl.filter');
 	});
 });
 
@@ -111,3 +112,4 @@ Route::get('/crawl2', [ThuThapController::class, 'crawl2_detail']);
 Route::get('/crawl3', [ThuThapController::class, 'crawl3_film_detail']);
 Route::get('/crawl4', [ThuThapController::class, 'crawl4_imdb']);
 Route::get('/crawl5', [ThuThapController::class, 'crawl5_img']);
+Route::get('/run/{unique_name}', [ThuThapController::class, 'run_tien_trinh'])->name('run');

@@ -1,13 +1,13 @@
 @include('admin.layout.header')
 <div class="content">
-	@if (session('success'))
+	@if (session('msg'))
 		<div class="alert alert-success">
-			{{ session('success') }}
+			{{ session('msg') }}
 		</div>
 	@endif
-	@if (session('false'))
+	@if (session('err'))
 		<div class="alert alert-danger">
-			{{ session('false') }}
+			{{ session('err') }}
 		</div>
 	@endif
 
@@ -33,9 +33,15 @@
 								<label for="name" class="col-form-label">Năm phát hành</label>
 								<select class="form-select select filter" name="year">
 									<option value="0" {{ request('year') == 0 ? 'selected' : '' }}>Tất cả năm</option>
-									@for ($i = date('Y'); $i >= 2010; $i--)
-										<option value="{{ $i }}" {{ request('year') == $i ? 'selected' : '' }}>{{ $i }}</option>
-									@endfor
+									@php
+										$list_year = DB::table('films')
+										    ->distinct()
+										    ->pluck('year');
+									@endphp
+									@foreach ($list_year as $year)
+										<option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+									@endforeach
+
 								</select>
 							</div>
 							<div class="col-md-3 col-lg-3 pb-1">
@@ -82,7 +88,7 @@
 											@endif
 										</td>
 										<td>
-											<a href="#" class="btn btn-danger">Xóaaaaa</a>
+											<a href="{{ route('film.delete', $film->id) }}" class="btn btn-danger">Xóaaaaa</a>
 										</td>
 									</tr>
 								@endforeach

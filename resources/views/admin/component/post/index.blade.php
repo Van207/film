@@ -78,7 +78,9 @@
 
 						</tbody>
 					</table>
+
 				</div>
+				<div class="pagination_wrapper text-center mt-3 mb-2">{{ $posts->links() }}</div>
 			</div>
 		</div>
 	</div>
@@ -90,7 +92,7 @@
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		display: -webkit-box;
-		height: 48px;
+		height: 45px;
 	}
 </style>
 @include('admin.layout.footer')

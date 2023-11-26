@@ -11,36 +11,45 @@ use Illuminate\Support\Facades\DB;
 class ThuThapController extends Controller
 {
 
-
-	public function index()
-	{
-		$this->crawl1_name_link_year();
-	}
-
-
 	// Thu thập list film theo năm
-	function crawl1_name_link_year()
+	function crawl1_name_link_year($year)
 	{
-		$year = '2023';
-		$url = "https://www.boxofficemojo.com/year/world/$year/"; // Thay thế URL của trang web bạn muốn crawl
 
+		$url = "https://www.boxofficemojo.com/year/world/$year/"; // Thay thế URL của trang web bạn muốn crawl
+		$count = 0;
 		$client = new Client();
 		$crawler = $client->request('GET', $url);
 		$links = $crawler->filter('a.a-link-normal');
-		$links->each(function ($node) use ($year) {
+
+		$links->each(function ($node) use ($year, &$count) {
 			$href = $node->attr('href');
 			$name = $node->text();
 			if (str_contains($href, '/releasegroup')) {
 				$link = "https://www.boxofficemojo.com" . $href;
 
-				DB::table('film_store')->insertOrIgnore([
+				$phim_check = DB::table('films')
+					->where('year', $year)
+					->where('name', $name)
+					->exists();
+
+				if ($phim_check) {
+					$public = 1;
+				} else {
+					$public = 0;
+				}
+				$result = DB::table('film_store')->insertOrIgnore([
 					'name' => $name,
 					'link' => $link,
 					'year' => $year,
 					'status' => '1',
+					'public' => $public
 				]);
+				if ($result) {
+					$count++;
+				}
 			}
 		});
+		return $count;
 	}
 
 
@@ -68,7 +77,7 @@ class ThuThapController extends Controller
 			} else {
 				$image = "";
 			}
-			echo $image;
+			// echo $image;
 
 
 			// Crawl tóm tắt phim (summary)
@@ -78,7 +87,7 @@ class ThuThapController extends Controller
 			} else {
 				$summary = "";
 			}
-			echo '<br>' . $summary;
+			// echo '<br>' . $summary;
 
 			// Doanh thu nội địa _ nước ngoài _ toàn thế giới
 			$domestic_international_worldwide_html = $crawler->filter('.mojo-performance-summary-table .a-section.a-spacing-none .a-size-medium.a-text-bold');
@@ -87,7 +96,7 @@ class ThuThapController extends Controller
 				$international = trim($domestic_international_worldwide_html->eq(1)->text());
 				$worldwide = trim($domestic_international_worldwide_html->eq(2)->text());
 			}
-			echo '<br>' . $domestic . '<br>' . $international . '<br>' . $worldwide;
+			// echo '<br>' . $domestic . '<br>' . $international . '<br>' . $worldwide;
 
 
 			// Lấy link chứa detail, lần sau crawl tiếp
@@ -97,14 +106,14 @@ class ThuThapController extends Controller
 			} else {
 				$title_summary_link = "";
 			}
-			echo '<br>' . $title_summary_link;
+			// echo '<br>' . $title_summary_link;
 
 			if ($title_summary_link != "") {
 				$imdb_url = str_replace("www.boxofficemojo.com", "www.imdb.com", $title_summary_link);
 				$parsed_url = parse_url($imdb_url);
 				$link_imdb = $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'];
 			}
-			echo '<br>' . $link_imdb;
+			// echo '<br>' . $link_imdb;
 
 			DB::table('film_store')
 				->where('id', $id)
@@ -144,7 +153,7 @@ class ThuThapController extends Controller
 							}
 						});
 					} else {
-						echo "no country list";
+						// echo "no country list";
 					}
 				});
 				DB::table('film_store')
@@ -153,10 +162,10 @@ class ThuThapController extends Controller
 						'status' => '3',
 					]);
 			} else {
-				echo "No table";
+				// echo "No table";
 			}
 		} else {
-			echo "Hết dữ liệu";
+			// echo "Hết dữ liệu";
 		}
 	}
 
@@ -195,7 +204,7 @@ class ThuThapController extends Controller
 					'status' => '4',
 				]);
 		} else {
-			echo "HẾT";
+			// echo "HẾT";
 		}
 	}
 
@@ -235,7 +244,7 @@ class ThuThapController extends Controller
 				$budget = '';
 			}
 
-			echo "$name_vi - $budget";
+			// echo "$name_vi - $budget";
 			// END Crawl name_vi và budget
 
 
@@ -252,7 +261,7 @@ class ThuThapController extends Controller
 					$castRoleNode = $cast->filter('div:nth-child(2) .title-cast-item__characters-list ul li a span.sc-bfec09a1-4');
 					$cast_role = $castRoleNode->count() > 0 ? $castRoleNode->text() : '';
 
-					echo "$cast_name - $cast_role - $cast_img" . '<br>';
+					// echo "$cast_name - $cast_role - $cast_img" . '<br>';
 
 					DB::table('film_store_cast')->insertOrIgnore([
 						'film_id' => $id,
@@ -262,7 +271,7 @@ class ThuThapController extends Controller
 					]);
 				});
 			} else {
-				echo "no cast";
+				// echo "no cast";
 			}
 
 			// END Crawl link cast (film_cast)
@@ -287,7 +296,7 @@ class ThuThapController extends Controller
 					'status' => '5',
 				]);
 		} else {
-			echo 'HẾT RỒI';
+			// echo 'HẾT RỒI';
 		}
 	}
 
@@ -296,12 +305,13 @@ class ThuThapController extends Controller
 	function crawl5_img()
 	{
 		$film = DB::table('film_store')
-			->select('id', 'url_media')
+			->select('id', 'name', 'url_media')
 			->where('status', '5')
 			->where('url_media', '!=', '')
 			->first();
 		if ($film) {
 			$id = $film->id;
+			$film_name = $film->name;
 			$url = $film->url_media;
 
 			// Thực hiện crawl
@@ -320,7 +330,8 @@ class ThuThapController extends Controller
 					'img_big' => $img_big,
 					'status' => '6',
 				]);
-			echo $img_big;
+			// echo $img_big;
+			return $film_name;
 		}
 	}
 
@@ -342,7 +353,7 @@ class ThuThapController extends Controller
 	{
 		$crawl = Crawl::find($id);
 		$crawl->name = $request->name;
-		$crawl->url = $request->url;
+		$crawl->year = $request->year;
 		$crawl->start = $request->start;
 		$crawl->schedule = $request->schedule;
 
@@ -350,22 +361,22 @@ class ThuThapController extends Controller
 		return redirect()->route('crawl.index')->with('msg', "Cập nhật thành công");
 	}
 
-	function test_tien_trinh($unique_name)
+	function run_tien_trinh($unique_name)
 	{
 		$check = DB::table('crawl')
 			->where('unique_name', $unique_name)
 			->where('start', 1)
 			->first();
 		if ($check) {
-			if ($unique_name == 'crawl_list') {
-				$this->crawl1_name_link_year();
-				return redirect()->route('crawl.index')->with('msg', 'Đã chạy xong');
+			if ($unique_name == 'crawl_list' && $check->year != '0') {
+				$count = $this->crawl1_name_link_year($check->year);
+				return redirect()->route('crawl.index')->with('msg', "Đã tổng hợp được $count phim");
 			} else {
 				$this->crawl2_detail();
 				$this->crawl3_film_detail();
 				$this->crawl4_imdb();
-				$this->crawl5_img();
-				return redirect()->route('crawl.index')->with('msg', 'Đã chạy xong');
+				$name = $this->crawl5_img();
+				return redirect()->route('crawl.index')->with('msg', "Tổng hợp thành công chi tiết và doanh thu phim <b>$name</b>");
 			}
 		} else {
 			return redirect()->route('crawl.index')->with('err', 'Tiến trình chưa được bật');
@@ -375,7 +386,7 @@ class ThuThapController extends Controller
 	public function storage()
 	{
 		$title = "Dữ liệu thu thập";
-		$film_store = DB::table('film_store')->simplePaginate('50');
+		$film_store = DB::table('film_store')->simplePaginate(25);
 
 		return view('admin.component.crawlStorage.index', compact('title', 'film_store'));
 	}
@@ -402,5 +413,161 @@ class ThuThapController extends Controller
 		} else {
 			abort(404);
 		}
+	}
+
+	public function public_film($store_id)
+	{
+		$store = DB::table('film_store')
+			->where('id', $store_id)
+			->select(
+				'name',
+				'name_vi',
+				'image',
+				'img_big',
+				'url_media',
+				'summary',
+				'link',
+				'title_summary_link',
+				'link_imdb',
+				'budget',
+				'worldwide',
+				'domestic',
+				'international',
+				'year',
+				'status'
+			)
+			->first();
+
+		if ($store) {
+			$budget = $this->chuanHoaSo($store->budget);
+			$domestic = $this->chuanHoaSo($store->domestic);
+			$worldwide = $this->chuanHoaSo($store->worldwide);
+			$international = $this->chuanHoaSo($store->worldwide);
+
+			$film_id = DB::table('films')->insertGetId([
+				'name' => $store->name,
+				'name_vi' => $store->name_vi,
+				'image' => $store->image,
+				'img_big' => $store->img_big,
+				'url_media' => $store->url_media,
+				'summary' => $store->summary,
+				'link' => $store->link,
+				'title_summary_link' => $store->title_summary_link,
+				'link_imdb' => $store->link_imdb,
+				'budget' => $budget,
+				'worldwide' => $worldwide,
+				'domestic' => $domestic,
+				'international' => $international,
+				'year' => $store->year,
+				'status' => $store->status,
+			]);
+
+			// Thêm detail film_detail
+			$store_details = DB::table('film_store_detail')
+				->select('title', 'details')
+				->where('film_id', $store_id)->get();
+			if (count($store_details) > 0) {
+				foreach ($store_details as $detail) {
+					if ($detail->title == 'domestic distributor') {
+						DB::table('film_detail')->insert([
+							'film_id' => $film_id,
+							'title' => $detail->title,
+							'details' => preg_replace("/see full company information/i", "", $detail->details),
+						]);
+					} else if ($detail->title == 'domestic opening') {
+						DB::table('film_detail')->insert([
+							'film_id' => $film_id,
+							'title' => $detail->title,
+							'details' => $this->chuanHoaSo($detail->details),
+						]);
+					}
+					// genres
+					else if ($detail->title == 'genres') {
+						DB::table('film_detail')->insert([
+							'film_id' => $film_id,
+							'title' => $detail->title,
+							'details' => ucfirst(str_replace(' ', ',', $detail->details)),
+						]);
+					} else {
+						DB::table('film_detail')->insert([
+							'film_id' => $film_id,
+							'title' => $detail->title,
+							'details' => $detail->details,
+						]);
+					}
+				}
+			}
+
+			$revenues = DB::table('film_store_revenue')
+				->select('country', 'release_date', 'opening', 'gross')
+				->where('film_id', $store_id)->get();
+
+			if (count($revenues) > 0) {
+				foreach ($revenues as $revenue) {
+					DB::table('film_revenue')->insert([
+						'film_id' => $film_id,
+						'country' => $revenue->country,
+						'release_date' => $revenue->release_date,
+						'opening' => $this->chuanHoaSo($revenue->opening),
+						'gross' => $this->chuanHoaSo($revenue->gross),
+					]);
+				}
+			}
+
+
+			$casts = DB::table('film_store_cast')
+				->select('avatar', 'name', 'role')
+				->where('film_id', $store_id)->get();
+
+			if (count($casts) > 0) {
+				foreach ($casts as $cast) {
+					DB::table('film_cast')->insert([
+						'film_id' => $film_id,
+						'avatar' => $cast->avatar,
+						'name' => $cast->name,
+						'role' => $cast->role,
+					]);
+				}
+			}
+			// Cuối cùng update trạng thái
+			DB::table('film_store')->where('id', $store_id)->update(['public' => 1]);
+		}
+
+		return redirect()->route('crawl.storage')->with('msg', "Đã public thành công");
+	}
+
+
+	public function chuanHoaSo($text)
+	{
+		$text = preg_replace("/\(estimated\)/", "", $text);
+		$text = preg_replace("/[^0-9]/", "", $text);
+		$text = floatval($text);
+		return $text;
+	}
+
+	public function filter(Request $request)
+	{
+		$name = $request->input('name');
+		$year = $request->input('year');
+		$public = $request->input('public');
+
+		$film = DB::table('film_store');
+		// dd($name, $year);
+		if ($name && $name != "") {
+			$film->where('name', 'LIKE', "%{$name}%")->orWhere('name_vi', 'LIKE', "%{$name}%");
+		}
+
+		if ($year && $year != '0') {
+			$film->where('year', $year);
+		}
+		if ($public !== null) {
+			$film->where('public', $public);
+		}
+
+
+		$film_store = $film->simplePaginate(25)->appends(['name' => $name, 'year' => $year, 'public' => $public]);
+
+		$title = "Danh sách phim";
+		return view('admin.component.crawlStorage.index', compact('title', 'film_store'));
 	}
 }

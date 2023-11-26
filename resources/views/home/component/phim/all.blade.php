@@ -24,9 +24,14 @@
 									<label for="name" class="col-form-label">Năm phát hành</label>
 									<select class="form-select select filter" name="year">
 										<option value="0" {{ request('year') == 0 ? 'selected' : '' }}>Tất cả năm</option>
-										@for ($i = date('Y'); $i >= 2010; $i--)
-											<option value="{{ $i }}" {{ request('year') == $i ? 'selected' : '' }}>{{ $i }}</option>
-										@endfor
+										@php
+											$list_year = DB::table('films')
+											    ->distinct()
+											    ->pluck('year');
+										@endphp
+										@foreach ($list_year as $year)
+											<option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+										@endforeach
 									</select>
 								</div>
 

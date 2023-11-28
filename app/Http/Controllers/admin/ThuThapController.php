@@ -580,13 +580,13 @@ class ThuThapController extends Controller
 		if ($check) {
 			if ($unique_name == 'crawl_list' && $check->year != '0') {
 				$count = $this->crawl1_name_link_year($check->year);
-				return response()->json(["message" => "Đã tổng hợp được $count phim"]);
+				return response()->json(["message" => "Đã tổng hợp được <b>$count</b> phim trong năm <b>$check->year</b>"]);
 			} else {
 				$this->crawl2_detail();
 				$this->crawl3_film_detail();
 				$this->crawl4_imdb();
 				$name = $this->crawl5_img();
-				return response()->json(["message" => "Tổng hợp thành công chi tiết và doanh thu phim $name"]);
+				return response()->json(["message" => "Tổng hợp thành công chi tiết và doanh thu phim <b>$name</b>"]);
 			}
 		} else {
 			return response()->json(["message" => "Tiến trình chưa được bật"]);

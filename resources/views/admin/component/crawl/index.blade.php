@@ -21,10 +21,6 @@
 			<h5 class="mb-0">Danh sách tiến trình thu thập</h5>
 		</div>
 
-		<div class="card-body">
-			<a href="" class="btn btn-success">Thêm tiến trình</a>
-		</div>
-
 		<div class="table-responsive">
 			<table class="table table-striped table-hover">
 				<thead>

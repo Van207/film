@@ -50,12 +50,12 @@
 						<div class="col-lg-10">
 							<select class="form-control select" name="schedule">
 								<option value="">--------------</option>
-								<option value="every1minute" {!! $crawl->schedule == 'every1minute' ? 'selected' : '' !!}>Mỗi 1 phút (Dùng khi test)</option>
-								<option value="every2minutes" {!! $crawl->schedule == 'every2minutes' ? 'selected' : '' !!}>Mỗi 2 phút</option>
-								<option value="every5minutes" {!! $crawl->schedule == 'every5minutes' ? 'selected' : '' !!}>Mỗi 5 phút</option>
-								<option value="hourly" {!! $crawl->schedule == 'every5minutes' ? 'selected' : '' !!}>Mỗi giờ</option>
-								<option value="daily" {!! $crawl->schedule == 'every5minutes' ? 'selected' : '' !!}>Mỗi ngày</option>
-								<option value="2perday" {!! $crawl->schedule == 'every5minutes' ? 'selected' : '' !!}>Mỗi 2 lần 1 ngày</option>
+								<option value="every1minute" {{ $crawl->schedule == 'every1minute' ? 'selected' : '' }}>Mỗi 1 phút (Dùng khi test)</option>
+								<option value="every2minutes" {{ $crawl->schedule == 'every2minutes' ? 'selected' : '' }}>Mỗi 2 phút</option>
+								<option value="every5minutes" {{ $crawl->schedule == 'every5minutes' ? 'selected' : '' }}>Mỗi 5 phút</option>
+								<option value="hourly" {{ $crawl->schedule == 'hourly' ? 'selected' : '' }}>Mỗi giờ</option>
+								<option value="daily" {{ $crawl->schedule == 'daily' ? 'selected' : '' }}>Mỗi ngày</option>
+								<option value="2perday" {{ $crawl->schedule == '2perday' ? 'selected' : '' }}>Mỗi 2 lần 1 ngày</option>
 							</select>
 						</div>
 					</div>

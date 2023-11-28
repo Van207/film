@@ -54,7 +54,23 @@
 								</td>
 								<td>{{ $c->year }}</td>
 
-								<td>{{ $c->schedule }}</td>
+								<td>
+									@if ($c->schedule == 'every1minute')
+										Mỗi 1 phút
+									@elseif($c->schedule == 'every2minutes')
+										Mỗi 2 phút
+									@elseif($c->schedule == 'every5minutes')
+										Mỗi 5 phút
+									@elseif($c->schedule == 'hourly')
+										Mỗi giờ
+									@elseif($c->schedule == 'daily')
+										Mỗi ngày
+									@elseif($c->schedule == '2perday')
+										Mỗi 2 lần 1 ngày
+									@else
+										Không có
+									@endif
+								</td>
 								<td>
 									<a href="{{ route('run', $c->unique_name) }}">Click</a>
 								</td>

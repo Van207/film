@@ -570,4 +570,26 @@ class ThuThapController extends Controller
 		$title = "Danh sách phim";
 		return view('admin.component.crawlStorage.index', compact('title', 'film_store'));
 	}
+
+	function cronjob_tien_trinh($unique_name)
+	{
+		$check = DB::table('crawl')
+			->where('unique_name', $unique_name)
+			->where('start', 1)
+			->first();
+		if ($check) {
+			if ($unique_name == 'crawl_list' && $check->year != '0') {
+				$count = $this->crawl1_name_link_year($check->year);
+				return response()->json(["message" => "Đã tổng hợp được $count phim"]);
+			} else {
+				$this->crawl2_detail();
+				$this->crawl3_film_detail();
+				$this->crawl4_imdb();
+				$name = $this->crawl5_img();
+				return response()->json(["message" => "Tổng hợp thành công chi tiết và doanh thu phim $name"]);
+			}
+		} else {
+			return response()->json(["message" => "Tiến trình chưa được bật"]);
+		}
+	}
 }

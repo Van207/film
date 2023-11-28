@@ -113,3 +113,4 @@ Route::get('/crawl3', [ThuThapController::class, 'crawl3_film_detail']);
 Route::get('/crawl4', [ThuThapController::class, 'crawl4_imdb']);
 Route::get('/crawl5', [ThuThapController::class, 'crawl5_img']);
 Route::get('/run/{unique_name}', [ThuThapController::class, 'run_tien_trinh'])->name('run');
+Route::get('/cronjob/{unique_name}', [ThuThapController::class, 'cronjob_tien_trinh'])->name('cronjob');

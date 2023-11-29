@@ -270,7 +270,7 @@ body {
 
 .section-heading h4 {
 	color: #2a2a2a;
-	font-size: 35px;
+	font-size: 26px;
 	font-weight: 700;
 	text-transform: capitalize;
 	margin-bottom: 25px;
@@ -739,7 +739,7 @@ header
 }
 
 .logo {
-	display: none;
+	width: 6%;
 }
 
 @media (max-width: 767px) {

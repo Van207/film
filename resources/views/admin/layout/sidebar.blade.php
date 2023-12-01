@@ -49,6 +49,17 @@
 					</a>
 				</li>
 
+				<li class="nav-item nav-item-submenu ">
+					<a href="#" class="nav-link">
+						<i class="ph-chart-line-up"></i>
+						<span>Theo dõi doanh thu phim</span>
+					</a>
+					<ul class="nav-group-sub collapse @if (Request::is('admin/category*') || Request::is('admin/post*')) show @endif">
+						<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @if (Request::is('admin/post*')) active @endif">Doanh thu hàng tuần</a></li>
+						<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link @if (Request::is('admin/category*')) active @endif">Doanh thu hàng tháng</a></li>
+
+					</ul>
+				</li>
 
 				<li class="nav-item nav-item-submenu ">
 					<a href="#" class="nav-link">
@@ -73,7 +84,7 @@
 
 					</ul>
 				</li>
-				
+
 				@if (Auth::check() && Auth::user()->role == '0')
 					<li class="nav-item ">
 						<a href="{{ route('user.index') }}" class="nav-link @if (Request::is('admin/user*') || Request::is('admin/users*')) active @endif">

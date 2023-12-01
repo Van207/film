@@ -54,39 +54,39 @@
 									<div class="d-inline-flex align-items-center justify-content-center mb-4 mt-2">
 										<img src="../../../assets/images/logo_icon.svg" class="h-48px" alt="">
 									</div>
-									<h5 class="mb-0">Login to your account</h5>
-									<span class="d-block text-muted">Enter your credentials below</span>
+									<h5 class="mb-0">Đăng nhập tài khoản quản trị viên</h5>
+									<span class="d-block text-muted">Nhập thông tin đăng nhập dưới đây</span>
 								</div>
 
 								<div class="mb-3">
-									<label class="form-label">Username</label>
+									<label class="form-label">Email</label>
 									<div class="form-control-feedback form-control-feedback-start">
-										<input type="email" class="form-control" placeholder="john@doe.com" name="email" value="admin@gmail.com">
+										<input type="email" class="form-control" placeholder="john@doe.com" name="email" value="{{ old('email') }}">
 										<div class="form-control-feedback-icon">
 											<i class="ph-user-circle text-muted"></i>
 										</div>
 
 										@error('email')
-											<p class="has-error">{{ $message }}</p>
+											<p class="text-danger">{{ $message }}</p>
 										@enderror
 									</div>
 								</div>
 
 								<div class="mb-3">
-									<label class="form-label">Password</label>
+									<label class="form-label">Mật khẩu</label>
 									<div class="form-control-feedback form-control-feedback-start">
 										<input type="password" class="form-control" placeholder="" name="password">
 										<div class="form-control-feedback-icon">
 											<i class="ph-lock text-muted"></i>
 										</div>
 										@error('password')
-											<p class="has-error">{{ $message }}</p>
+											<p class="text-danger">{{ $message }}</p>
 										@enderror
 									</div>
 								</div>
 							</div>
-							<div class="mb-3">
-								<button type="submit" class="btn btn-primary w-100">Sign in</button>
+							<div class="mb-3 text-center">
+								<button type="submit" class="btn btn-primary w-50">Đăng nhập</button>
 							</div>
 
 						</div>

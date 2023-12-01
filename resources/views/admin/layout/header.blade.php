@@ -73,12 +73,12 @@
 					<div class="dropdown-menu dropdown-menu-end">
 						<a href="{{ route('user.profile', Auth::user()->id) }}" class="dropdown-item">
 							<i class="ph-user-circle me-2"></i>
-							My profile
+							Trang cá nhân
 						</a>
 						<div class="dropdown-divider"></div>
 						<a href="{{ route('logout') }}" class="dropdown-item">
 							<i class="ph-sign-out me-2"></i>
-							Logout
+							Đăng xuất
 						</a>
 
 					</div>

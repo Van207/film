@@ -78,9 +78,9 @@
 								<th>id</th>
 								<th>Tên phim</th>
 								<th>Hình ảnh</th>
-								<th>Public now</th>
+
 								<th>Trạng thái</th>
-								<th>Public</th>
+								<th>Publish <input type="checkbox" name="" id="checkAll"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -96,12 +96,6 @@
 											@endif
 
 										</td>
-
-										<td>
-											@if ($f->status == 6 && $f->public == 0)
-												<a href="{{ route('crawl.public', $f->id) }}" class="btn btn-flat-primary rounded-pill">Public</a>
-											@endif
-										</td>
 										<td>
 											@if ($f->status == 6)
 												<div class="badge bg-success p-1">Full</div>
@@ -113,7 +107,10 @@
 											@if ($f->public == 1)
 												<div class="badge bg-primary p-1">Đã public</div>
 											@else
-												<div class="badge bg-danger p-1">Chưa public</div>
+												@if ($f->status == 6)
+													<a href="{{ route('crawl.public', $f->id) }}" class="btn btn-flat-primary rounded-pill">Public</a>
+													<input type="checkbox" name="ids[]" id="ids" value="{{ $f->id }}">
+												@endif
 											@endif
 										</td>
 									</tr>
@@ -135,3 +132,12 @@
 
 </div>
 @include('admin.layout.footer')
+<script>
+	document.getElementById('checkAll').addEventListener('change', function() {
+
+		var checkboxes = document.querySelectorAll('#ids');
+		checkboxes.forEach(function(checkbox) {
+			checkbox.checked = document.getElementById('checkAll').checked;
+		});
+	});
+</script>

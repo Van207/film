@@ -1,3 +1,7 @@
+@push('scripts')
+	<script src="<?= asset('assets/js/vendor/tables/datatables/datatables.min.js') ?>"></script>
+@endpush
+
 @include('admin.layout.header')
 <div class="content">
 	@if (session('success'))
@@ -77,7 +81,7 @@
 					<h2>Doanh thu</h2>
 				</div>
 				<div class="card-body">
-					<table class="datatable-basic table table-bordered table-hover ">
+					<table class="datatable-basic table table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>STT</th>
@@ -145,3 +149,20 @@
 
 </div>
 @include('admin.layout.footer')
+<script>
+	$('.datatable-basic').DataTable({
+		autoWidth: false,
+		dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+		language: {
+			search: '<span class="me-3">Tìm kiếm:</span> <div class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
+			searchPlaceholder: 'Nhập tên quốc gia...',
+			lengthMenu: '<span class="me-3">Show:</span> _MENU_',
+			paginate: {
+				'first': 'First',
+				'last': 'Last',
+				'next': document.dir == "rtl" ? '←' : '→',
+				'previous': document.dir == "rtl" ? '→' : '←'
+			}
+		}
+	});
+</script>

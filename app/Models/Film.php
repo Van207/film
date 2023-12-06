@@ -9,6 +9,7 @@ class Film extends Model
 {
 	use HasFactory;
 	protected $table = 'films';
+	public $timestamps = false;
 
 	public function film_cast()
 	{

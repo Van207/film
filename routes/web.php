@@ -45,9 +45,6 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::post('/edit/{id}', [FilmController::class, 'update'])->name('film.update');
 		Route::get('/delete/{id}', [FilmController::class, 'destroy'])->name('film.delete');
 		Route::get('/filter', [FilmController::class, 'filter'])->name('film.filter');
-
-
-		Route::get('/edit-revenue/{id}', [FilmController::class, 'editRevenue'])->name('film.editRevenue');
 	});
 
 	Route::prefix('/category')->group(function () {

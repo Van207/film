@@ -15,8 +15,9 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header m-0">
-					<div class="card-title m-0">
+					<div class="card-title">
 						<h4 class="m-0">Lọc & Tìm kiếm</h4>
+						<a href="{{ route('film.create') }}" class="btn btn-info">Thêm phim</a>
 					</div>
 				</div>
 
@@ -88,7 +89,8 @@
 											@endif
 										</td>
 										<td>
-											<a href="{{ route('film.delete', $film->id) }}" class="btn btn-danger">Xóaaaaa</a>
+											<a href="{{ route('film.edit', $film->id) }}" class="btn btn-warning"><i class="ph-note-pencil"></i></a>
+											<a href="{{ route('film.delete', $film->id) }}" class="btn btn-danger"><i class="ph-trash"></i></a>
 										</td>
 									</tr>
 								@endforeach

@@ -4,8 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Film;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+
 
 class FilmController extends Controller
 {
@@ -28,7 +31,8 @@ class FilmController extends Controller
 	 */
 	public function create()
 	{
-		//
+		$title = "Thêm mới phim";
+		return view('admin.component.phim.create', compact('title'));
 	}
 
 	/**
@@ -39,7 +43,47 @@ class FilmController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		$request->validate(
+			[
+				'name' => 'required|max:255|unique:films,name',
+				'name_vi' => 'required|max:255',
+				'budget' => 'numeric',
+				'worldwide' => 'numeric',
+				'domestic' => 'numeric',
+				'international' => 'numeric',
+				'year' => 'numeric',
+			],
+			[
+				'name.required' => "Tên phim không được để trống",
+				'name.max' => "Tên phim quá dài",
+				'name.unique' => "Phim đã tồn tại",
+				'name_vi.required' => "Tên phim không được để trống",
+				'name_vi.max' => "Tên phim quá dài",
+				'budget.numeric' => "Sử dụng định dạng số",
+				'worldwide.numeric' => "Sử dụng định dạng số",
+				'domestic.numeric' => "Sử dụng định dạng số",
+				'international.numeric' => "Sử dụng định dạng số",
+				'year.numeric' => "Sử dụng định dạng số",
+			]
+		);
+		$phim = new Film();
+		$phim->name = $request->name;
+		$phim->name_vi = $request->name_vi;
+		$phim->image = $request->image;
+		$phim->img_big = $request->img_big;
+		$phim->summary = $request->summary;
+		$phim->budget = $request->budget;
+		$phim->domestic = $request->domestic;
+		$phim->worldwide = $request->worldwide;
+		$phim->international = $request->international;
+		$phim->year = $request->year;
+		$phim->url_media = '';
+		$phim->link = '';
+		$phim->title_summary_link = '';
+		$phim->link_imdb = '';
+		$phim->status = 6;
+		$phim->save();
+		return redirect()->route('film.index')->with('msg', 'Đã thêm thành công!');
 	}
 
 	/**
@@ -67,10 +111,9 @@ class FilmController extends Controller
 	public function edit($id)
 	{
 		$title = 'Cập nhật phim';
-		$film = Film::find($id);
-		$revenue = $film->film_revenue;
+		$phim = Film::find($id);
 
-		return view('admin.component.phim.edit', compact('film', 'revenue', 'title'));
+		return view('admin.component.phim.edit', compact('phim', 'title'));
 	}
 
 	/**
@@ -82,7 +125,52 @@ class FilmController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
+		$request->validate(
+			[
+				'name' => [
+					'required',
+					'max:255',
+					Rule::unique('films', 'name')->ignore($id)
+				],
+				'name_vi' => 'required|max:255',
+				'budget' => 'numeric',
+				'worldwide' => 'numeric',
+				'domestic' => 'numeric',
+				'international' => 'numeric',
+				'year' => 'numeric',
+			],
+			[
+				'name.required' => "Tên phim không được để trống",
+				'name.max' => "Tên phim quá dài",
+				'name.unique' => "Phim đã tồn tại",
+				'name_vi.required' => "Tên phim không được để trống",
+				'name_vi.max' => "Tên phim quá dài",
+				'budget.numeric' => "Sử dụng định dạng số",
+				'worldwide.numeric' => "Sử dụng định dạng số",
+				'domestic.numeric' => "Sử dụng định dạng số",
+				'international.numeric' => "Sử dụng định dạng số",
+				'year.numeric' => "Sử dụng định dạng số",
+			]
+		);
+
+		$phim = Film::findOrFail($id);
+		$phim->name = $request->name;
+		$phim->name_vi = $request->name_vi;
+		$phim->image = $request->image;
+		$phim->img_big = $request->img_big;
+		$phim->summary = $request->summary;
+		$phim->budget = $request->budget;
+		$phim->domestic = $request->domestic;
+		$phim->worldwide = $request->worldwide;
+		$phim->international = $request->international;
+		$phim->year = $request->year;
+		$phim->url_media = '';
+		$phim->link = '';
+		$phim->title_summary_link = '';
+		$phim->link_imdb = '';
+		$phim->status = 6;
+		$phim->save();
+		return redirect()->route('film.index')->with('msg', 'Đã cập nhật thành công!');
 	}
 
 	/**

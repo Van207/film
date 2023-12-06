@@ -151,8 +151,8 @@
 		autoWidth: false,
 		dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		language: {
-			search: '<span class="me-3">Filter:</span> <div class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
-			searchPlaceholder: 'Type to filter...',
+			search: '<span class="me-3">Tìm kiếm:</span> <div class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
+			searchPlaceholder: 'Nhập tên...',
 			lengthMenu: '<span class="me-3">Show:</span> _MENU_',
 			paginate: {
 				'first': 'First',

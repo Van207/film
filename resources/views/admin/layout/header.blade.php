@@ -34,6 +34,7 @@
 	<script src="<?= asset('assets/demo/pages/uploader_bootstrap.js') ?>"></script>
 	<script src="<?= asset('assets/demo/pages/form_select2.js') ?>"></script>
 	@stack('styles')
+	@stack('scripts')
 </head>
 
 <body>

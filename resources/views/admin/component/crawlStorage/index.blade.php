@@ -75,19 +75,29 @@
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>id</th>
+								<th>
+									<input type="checkbox" name="checkAll" id="checkAll">
+								</th>
+								<th>STT</th>
 								<th>Tên phim</th>
 								<th>Hình ảnh</th>
-
 								<th>Trạng thái</th>
-								<th>Publish <input type="checkbox" name="" id="checkAll"></th>
+								<th>Publish</th>
 							</tr>
 						</thead>
 						<tbody>
 							@if (count($film_store) > 0)
+								@php
+									$stt = 1;
+								@endphp
 								@foreach ($film_store as $f)
 									<tr>
-										<td>{{ $f->id }}</td>
+										<td>
+											@if ($f->public == 0 && $f->status == 6)
+												<input type="checkbox" name="ids[]" id="ids" value="{{ $f->id }}">
+											@endif
+										</td>
+										<td>{{ $stt++ }}</td>
 										<td><a href="{{ route('crawl.view', $f->id) }}" title="Xem chi tiết">{{ $f->name }}</a></td>
 										<td>
 											@if ($f->image != '')
@@ -109,7 +119,6 @@
 											@else
 												@if ($f->status == 6)
 													<a href="{{ route('crawl.public', $f->id) }}" class="btn btn-flat-primary rounded-pill">Public</a>
-													<input type="checkbox" name="ids[]" id="ids" value="{{ $f->id }}">
 												@endif
 											@endif
 										</td>

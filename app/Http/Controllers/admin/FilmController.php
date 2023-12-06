@@ -135,4 +135,10 @@ class FilmController extends Controller
 		$title = "Danh sách phim";
 		return view('admin.component.phim.index', compact('title', 'films'));
 	}
+
+	public function doanhthu()
+	{
+		$title = "Biến động doanh thu";
+		return view('admin.component.phim.doanhThu', compact('title'));
+	}
 }

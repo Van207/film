@@ -88,6 +88,10 @@ Route::prefix('admin')->middleware('CheckLogin')->group(function () {
 		Route::get('/public/{id}', [ThuThapController::class, 'public_film'])->name('crawl.public');
 		Route::get('/filter', [ThuThapController::class, 'filter'])->name('crawl.filter');
 	});
+
+	Route::prefix('doanh-thu')->group(function () {
+		Route::get('/', [FilmController::class, 'doanhthu'])->name('doanhthu.index');
+	});
 });
 
 

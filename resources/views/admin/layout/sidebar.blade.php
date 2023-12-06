@@ -49,17 +49,15 @@
 					</a>
 				</li>
 
-				<li class="nav-item nav-item-submenu ">
-					<a href="#" class="nav-link">
+				<li class="nav-item">
+					<a href="{{ route('doanhthu.index') }}" class="nav-link @if (Request::is('admin/doanh-thu*')) active @endif">
 						<i class="ph-chart-line-up"></i>
-						<span>Theo dõi doanh thu phim</span>
+						<span>
+							Biến động doanh thu
+						</span>
 					</a>
-					<ul class="nav-group-sub collapse @if (Request::is('admin/category*') || Request::is('admin/post*')) show @endif">
-						<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @if (Request::is('admin/post*')) active @endif">Doanh thu hàng tuần</a></li>
-						<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link @if (Request::is('admin/category*')) active @endif">Doanh thu hàng tháng</a></li>
-
-					</ul>
 				</li>
+
 
 				<li class="nav-item nav-item-submenu ">
 					<a href="#" class="nav-link">

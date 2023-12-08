@@ -30,7 +30,7 @@
 						<th>Trạng thái</th>
 						<th>Năm</th>
 						<th>Đặt lịch</th>
-						<th>Run now</th>
+						<th>Test</th>
 						<th>Tùy chọn</th>
 					</tr>
 				</thead>
@@ -48,7 +48,12 @@
 									@endif
 
 								</td>
-								<td>{{ $c->year }}</td>
+								<td>
+									@if ($c->year != 0)
+										{{ $c->year }}
+									@else
+									@endif
+								</td>
 
 								<td>
 									@if ($c->schedule == 'every1minute')

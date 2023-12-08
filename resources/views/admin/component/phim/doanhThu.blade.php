@@ -63,10 +63,39 @@
 								<tbody>
 									<tr>
 										<td>1</td>
-										<td><a href="#" title="Xem chi tiết">Tên phim 1</a></td>
+										<td><a href="#" title="Xem chi tiết">The Hunger Games: The Ballad of Songbirds & Snakes (2023)</a></td>
 										<td>$199</td>
 										<td>{{ date('d/m/Y', strtotime(now())) }}</td>
-
+									</tr>
+									<tr>
+										<td>2</td>
+										<td><a href="#" title="Xem chi tiết">Godzilla</a></td>
+										<td>$789</td>
+										<td>{{ date('d/m/Y', strtotime(now())) }}</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td><a href="#" title="Xem chi tiết">Napoleon (2023)</a></td>
+										<td>$656</td>
+										<td>{{ date('d/m/Y', strtotime(now())) }}</td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td><a href="#" title="Xem chi tiết">Animal (2023)</a></td>
+										<td>$774</td>
+										<td>{{ date('d/m/Y', strtotime(now())) }}</td>
+									</tr>
+									<tr>
+										<td>5</td>
+										<td><a href="#" title="Xem chi tiết">Wish (2023)</a></td>
+										<td>$221</td>
+										<td>{{ date('d/m/Y', strtotime(now())) }}</td>
+									</tr>
+									<tr>
+										<td>6</td>
+										<td><a href="#" title="Xem chi tiết">Trolls Band Together (2023)</a></td>
+										<td>$278</td>
+										<td>{{ date('d/m/Y', strtotime(now())) }}</td>
 									</tr>
 								</tbody>
 							</table>

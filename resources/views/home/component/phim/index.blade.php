@@ -88,10 +88,10 @@
 				<!-- Nav tabs -->
 				<ul class="nav nav-pills justify-content-center mb-4">
 					<li class="nav-item">
-						<a class="nav-link px-5 border me-2 active" data-bs-toggle="tab" href="#chart-opening">Chart</a>
+						<a class="nav-link px-5 border me-2 active" data-bs-toggle="tab" href="#chart-opening">Biểu đồ</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link px-5 border me-2" data-bs-toggle="tab" href="#table-opening">Table</a>
+						<a class="nav-link px-5 border me-2" data-bs-toggle="tab" href="#table-opening">Bảng</a>
 					</li>
 				</ul>
 
@@ -132,10 +132,10 @@
 				<!-- Nav tabs -->
 				<ul class="nav nav-pills justify-content-center mb-4">
 					<li class="nav-item">
-						<a class="nav-link px-5 active border me-2" data-bs-toggle="tab" href="#chart-gross">Chart</a>
+						<a class="nav-link px-5 active border me-2" data-bs-toggle="tab" href="#chart-gross">Biểu đồ</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link px-5 border me-2" data-bs-toggle="tab" href="#table-gross">Table</a>
+						<a class="nav-link px-5 border me-2" data-bs-toggle="tab" href="#table-gross">Bảng</a>
 					</li>
 				</ul>
 

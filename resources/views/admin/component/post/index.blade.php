@@ -1,3 +1,6 @@
+@push('scripts')
+	<script src="<?= asset('assets/js/vendor/tables/datatables/datatables.min.js') ?>"></script>
+@endpush
 @include('admin.layout.header')
 <div class="content">
 	@if (session('success'))
@@ -21,10 +24,10 @@
 				</div>
 
 				<div class="table-responsive">
-					<table class="table border table-responsive table-hover">
+					<table class="table border table-responsive table-hover datatable-basic">
 						<thead>
 							<tr>
-								<th>id</th>
+								<th>STT</th>
 								<th>Tiêu đề</th>
 								<th>Thumbnail</th>
 								<th>Danh mục</th>
@@ -35,9 +38,12 @@
 						</thead>
 						<tbody>
 							@if (count($posts) > 0)
+								@php
+									$stt = 1;
+								@endphp
 								@foreach ($posts as $post)
 									<tr>
-										<td>{{ $post->id }}</td>
+										<td>{{ $stt++ }}</td>
 										<td width="300px">
 											<a href="{{ route('home.post', $post->slug) }}" title="{{ $post->title }}" target="_blank" class="post-title">{{ $post->title }}</a>
 										</td>
@@ -80,7 +86,7 @@
 					</table>
 
 				</div>
-				<div class="pagination_wrapper text-center mt-3 mb-2">{{ $posts->links() }}</div>
+				{{-- <div class="pagination_wrapper text-center mt-3 mb-2">{{ $posts->links() }}</div> --}}
 			</div>
 		</div>
 	</div>
@@ -96,3 +102,20 @@
 	}
 </style>
 @include('admin.layout.footer')
+<script>
+	$('.datatable-basic').DataTable({
+		autoWidth: false,
+		dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+		language: {
+			search: '<span class="me-3">Tìm kiếm:</span> <div class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
+			searchPlaceholder: 'Nhập tên...',
+			lengthMenu: '<span class="me-3">Show:</span> _MENU_',
+			paginate: {
+				'first': 'First',
+				'last': 'Last',
+				'next': document.dir == "rtl" ? '←' : '→',
+				'previous': document.dir == "rtl" ? '→' : '←'
+			}
+		}
+	});
+</script>
